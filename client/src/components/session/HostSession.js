@@ -1,19 +1,43 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import styled from "styled-components";
+
+import { SocketInfo } from "../../contexts/SocketInfo";
+import { SessionState } from "../../contexts/SessionState";
+
+import { TopQuestionContext } from "../../contexts/TopQuestionContext";
+import { NewQuestionContext } from "../../contexts/NewQuestionContext";
+
+import { ChronologicalList } from "./ChronologicalList";
+import { TopList } from "./TopList";
+
+const SessionWrapper = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+`;
 
 export const HostSession = () => {
-  const newQuestions = Array();
-  const topQuestions = Array();
+  const NewQuestions = [
+    { id: 14, question: "Jeg liker polser?" },
+    { id: 12, question: "Jeg liker kebab?" },
+  ];
+  const TopQuestions = [
+    { id: 15, question: "Jeg liker noobs?" },
+    { id: 2, question: "Jeg liker kalver?" },
+  ];
+  const { userContext, setUserContext } = useContext(SessionState);
+  const { socketContext, setSocketContext } = useContext(SocketInfo);
+  const [newQuestions, setNewQuestions] = useState(NewQuestions);
+  const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
   return (
-    <div className="Host-session-container">
-      <div className="chronological-question-list">
-        <h2>Nye spørsmål</h2>
-        <ul></ul>
-      </div>
-      <div className="top-question-list">
-        <h2>Topprangerte spørsmål</h2>
-        <ul></ul>
-      </div>
-    </div>
+    <SessionWrapper>
+      <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
+        <ChronologicalList />
+      </NewQuestionContext.Provider>
+      <TopQuestionContext.Provider value={{ topQuestions, setTopQuestions }}>
+        <TopList />
+      </TopQuestionContext.Provider>
+    </SessionWrapper>
   );
 };
