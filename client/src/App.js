@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import "./App.css";
 import io from "socket.io-client";
 import { HostSession } from "./components/session/HostSession";
@@ -10,20 +10,22 @@ import { SocketInfo } from "./contexts/SocketInfo";
 
 function App() {
   const [userContext, setUserContext] = useState(0);
+  const [socketContext, setSocketContext] = useState(null);
 
-  switch (userContext) {
-    case 1:
-      return <HostSession />;
+  useEffect(() => {}, [userContext]);
 
-    case 2:
-      return <ParticipantSession />;
-
-    case 3:
-      return <PostSession />;
-
-    default:
-      return <Menu />;
-  }
+  return (
+    <SocketInfo.Provider value={{ socketContext, setSocketContext }}>
+      <SessionState.Provider value={{ userContext, setUserContext }}>
+        <div>
+          {userContext === 0 && <Menu />}
+          {userContext === 1 && <HostSession />}
+          {userContext === 2 && <ParticipantSession />}
+          {userContext === 3 && <PostSession />}
+        </div>
+      </SessionState.Provider>
+    </SocketInfo.Provider>
+  );
 }
 
 export default App;
