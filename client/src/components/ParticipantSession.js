@@ -1,6 +1,6 @@
 import React from "react";
 
-export const HostSession = () => {
+export const ParticipantSession = () => {
   const newQuestions = Array();
   const topQuestions = Array();
 
