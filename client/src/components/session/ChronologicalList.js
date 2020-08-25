@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import styled from "styled-components";
 
-import { TopQuestionContext } from "../../contexts/TopQuestionContext";
 import { NewQuestionContext } from "../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
@@ -16,21 +15,32 @@ const ListWrapper = styled.div`
   text-align: center;
 `;
 
-const List = styled.div`
-  border: 1px solid black;
+const ListItem = styled.li`
+  margin: 15px;
+  text-align: left;
+  background-color: lightblue;
+  border-radius: 20px;
 `;
 
-const ListItem = styled.li`
-  margin: 5px;
-`;
+const List = styled.div``;
 
 export const ChronologicalList = () => {
   const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);
-  const { topQuestions, setTopQuestions } = useContext(TopQuestionContext);
+  const [renderedQuestions, setRenderedQuestions] = useState([]);
+
+  useEffect(() => {
+    setRenderedQuestions(() => {
+      return newQuestions.map((questionInfo) => (
+        <ListItem>{questionInfo.question}</ListItem>
+      ));
+    });
+    console.log(newQuestions);
+  }, [newQuestions]);
+
   return (
     <ListWrapper>
-      <h2>Siste stilte</h2>
-      <List></List>
+      <h2>Siste</h2>
+      <List>{renderedQuestions}</List>
     </ListWrapper>
   );
 };

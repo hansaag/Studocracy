@@ -3,7 +3,6 @@ import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 
 import { TopQuestionContext } from "../../contexts/TopQuestionContext";
-import { NewQuestionContext } from "../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
   margin: 0 auto;
@@ -17,12 +16,13 @@ const ListWrapper = styled.div`
 `;
 
 const ListItem = styled.li`
-  margin: 5px;
+  margin: 15px;
+  text-align: left;
+  background-color: lightblue;
+  border-radius: 20px;
 `;
 
-const List = styled.div`
-  border: 1px solid black;
-`;
+const List = styled.div``;
 
 export const TopList = () => {
   const { topQuestions, setTopQuestions } = useContext(TopQuestionContext);
