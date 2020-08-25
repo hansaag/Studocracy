@@ -1,20 +1,38 @@
-import React, { useEffect } from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import io from "socket.io-client";
+import {
+  HostSession,
+  Menu,
+  ParticipantSession,
+  PostSession,
+} from "./components";
 
 const socket = io("http://localhost:6800");
+
 function App() {
+  const [userContext, setUserContext] = useState(0);
+
   useEffect(() => {
     socket.on("new-operations");
   }, []);
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>LOL</p>
-      </header>
-    </div>
-  );
+
+  switch (userContext) {
+    case 1:
+      return <HostSession />;
+      break;
+
+    case 2:
+      return <ParticipantSession />;
+      break;
+
+    case 3:
+      return <PostSession />;
+      break;
+
+    default:
+      return <Menu />;
+  }
 }
 
 export default App;
