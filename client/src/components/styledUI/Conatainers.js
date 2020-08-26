@@ -19,11 +19,13 @@ export const FlexDivY = styled.div`
 
 export const GridDiv = styled.div`
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: 12, 1fr;
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
-  height: 100vh;
-  width: 100%;
+  height: 96vh;
+  width: 96%;
+  margin: 1vh 1vw 1vh 1vw;
+  overflow: hidden;
 `;
 
 export const GridItem = styled.div``;
