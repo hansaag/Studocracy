@@ -1,4 +1,5 @@
 const express = require("express");
+const fetch = require("node-fetch");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
@@ -64,25 +65,25 @@ const emitPermissionGranted = (roomID) => {};
 
 //GENERAL PROCEDURES
 
-const addRoom = (inSocket) => {
-  const id = Math.random(1, 9999);
-  async () => {
-    console.log("lol");
-    try {
-      if (inSocket === undefined) return;
+const addRoom = async (inSocket) => {
+  const id = Math.floor(Math.random() * 90000) + 10000;
 
-      const hostSocket = inSocket.id;
+  console.log("lol");
+  try {
+    if (inSocket === undefined) return;
 
-      const body = { id, hostSocket };
-      const response = await fetch(`${ip}${port}/rooms`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
+    const hostSocket = inSocket;
+
+    const body = { id, hostSocket };
+    const response = await fetch(`${ip}${port}/rooms`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+
   console.log("lol2");
 };
 
