@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 
 import { SocketInfo } from "../../contexts/SocketInfo";
@@ -26,7 +26,7 @@ export const HostSession = () => {
     { id: 2, question: "Jeg liker kalver?" },
   ];
   const { userContext, setUserContext } = useContext(SessionState);
-  const { socketContext, setSocketContext } = useContext(SocketInfo);
+  const { activeSocket, setActiveSocket } = useContext(SocketInfo);
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 

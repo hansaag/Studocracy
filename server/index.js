@@ -43,6 +43,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("host-start-session", (data) => {
+    console.log("host starting session");
     //validate pin --start session (socket.data = data f.eks)
     addRoom(data);
   });

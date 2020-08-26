@@ -5,13 +5,17 @@ import { SessionState } from "../../contexts/SessionState";
 
 export const Menu = () => {
   const { userContext, setUserContext } = useContext(SessionState);
-  const { socketContext, setSocketContext } = useContext(SocketInfo);
+  const { activeSocket, setActiveSocket } = useContext(SocketInfo);
 
   const clickStartRoom = () => {
-    setSocketContext(io("http://localhost:6800"));
+    console.log(activeSocket.id);
+    if (activeSocket !== null) {
+      activeSocket.emit("host-start-session", activeSocket.id);
+      console.log("connected from ", activeSocket.id);
+    }
+    // setActiveSocket(sock);
     setUserContext(1);
   };
-  console.log("menu called");
 
   return (
     <div className="Menu-container">

@@ -10,14 +10,18 @@ import { PostSession } from "./components/postSession/PostSession";
 import { SessionState } from "./contexts/SessionState";
 import { SocketInfo } from "./contexts/SocketInfo";
 
+//placed above render method to prevent generating new cocket on rerender
+const sock = io("http://localhost:6800");
+
 function App() {
   const [userContext, setUserContext] = useState(0);
-  const [socketContext, setSocketContext] = useState(null);
+
+  const [activeSocket, setActiveSocket] = useState(sock);
 
   useEffect(() => {}, [userContext]);
 
   return (
-    <SocketInfo.Provider value={{ socketContext, setSocketContext }}>
+    <SocketInfo.Provider value={{ activeSocket, setActiveSocket }}>
       <SessionState.Provider value={{ userContext, setUserContext }}>
         {userContext === 0 && <Menu />}
         {userContext === 1 && <HostSession />}
