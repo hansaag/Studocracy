@@ -7,9 +7,16 @@ export const Menu = () => {
   const { userContext, setUserContext } = useContext(SessionState);
   const { activeSocket, setActiveSocket } = useContext(SocketInfo);
 
+  const dummyConnect = "1234";
+
   activeSocket.on("room-access", () => {
     console.log("room access received");
     setUserContext(2);
+  });
+
+  activeSocket.on("room-denied", () => {
+    console.log("room access denied");
+    //display error toast
   });
 
   const clickStartRoom = () => {
@@ -23,8 +30,8 @@ export const Menu = () => {
 
   const clickJoinRoom = () => {
     if (activeSocket !== null) {
-      activeSocket.emit("guest-join-session", activeSocket.id);
-      console.log("connected from ", activeSocket.id);
+      activeSocket.emit("guest-join-session", activeSocket.id, dummyConnect);
+      console.log("connected from ", activeSocket.id, dummyConnect);
     }
   };
 
@@ -32,7 +39,9 @@ export const Menu = () => {
     <div className="Menu-container">
       <div className="menu-head"></div>
       <div className="menu-body">
-        <div className="host-from-menu">Host game</div>
+        <div className="host-from-menu" onClick={clickJoinRoom}>
+          Host game
+        </div>
         <div className="join-from-menu" onClick={clickStartRoom}>
           Join game
         </div>

@@ -43,15 +43,15 @@ io.on("connection", (socket) => {
     console.log("guest disconnected");
   });
 
-  socket.on("host-start-session", (data) => {
+  socket.on("host-start-session", (id) => {
     console.log("host starting session");
     //validate pin --start session (socket.data = data f.eks)
-    addRoom(data);
+    addRoom(id);
   });
 
-  socket.on("guest-join-session", (data) => {
+  socket.on("guest-join-session", (id, pin) => {
     //validate pin --start session
-    users.push(socket.id);
+    console.log("recieved", id, pin);
   });
 
   socket.on("comment-submit", (data) => {
