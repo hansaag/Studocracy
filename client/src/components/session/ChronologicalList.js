@@ -7,7 +7,7 @@ import { NewQuestionContext } from "../../contexts/NewQuestionContext";
 const ListWrapper = styled.div`
   margin: 0 auto;
   margin-top: 10%;
-  height: 100vh;
+  height: 60vh;
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,9 @@ const ListWrapper = styled.div`
   text-align: center;
 `;
 
-const List = styled.div``;
+const List = styled.div`
+  overflow-y: scroll;
+`;
 
 const ListItem = styled.li`
   margin: 15px;

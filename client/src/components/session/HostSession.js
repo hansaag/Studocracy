@@ -9,16 +9,40 @@ import { NewQuestionContext } from "../../contexts/NewQuestionContext";
 
 import { ChronologicalList } from "./ChronologicalList";
 import { TopList } from "./TopList";
+import { QuestionForm } from "./QuestionForm";
 
 const SessionWrapper = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  max-width: 800px;
+  margin: 0 auto;
+`;
+
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const HostSession = () => {
   const NewQuestions = [
     { id: 14, question: "Jeg liker polser?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
     { id: 12, question: "Jeg liker kebab?" },
   ];
   const TopQuestions = [
@@ -32,12 +56,15 @@ export const HostSession = () => {
 
   return (
     <SessionWrapper>
-      <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
-        <ChronologicalList />
-      </NewQuestionContext.Provider>
-      <TopQuestionContext.Provider value={{ topQuestions, setTopQuestions }}>
-        <TopList />
-      </TopQuestionContext.Provider>
+      <ListContainer>
+        <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
+          <ChronologicalList />
+        </NewQuestionContext.Provider>
+        <TopQuestionContext.Provider value={{ topQuestions, setTopQuestions }}>
+          <TopList />
+        </TopQuestionContext.Provider>
+      </ListContainer>
+      <QuestionForm />
     </SessionWrapper>
   );
 };
