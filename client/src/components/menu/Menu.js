@@ -7,14 +7,25 @@ export const Menu = () => {
   const { userContext, setUserContext } = useContext(SessionState);
   const { activeSocket, setActiveSocket } = useContext(SocketInfo);
 
+  activeSocket.on("room-access", () => {
+    console.log("room access received");
+    setUserContext(2);
+  });
+
   const clickStartRoom = () => {
     console.log(activeSocket.id);
     if (activeSocket !== null) {
       activeSocket.emit("host-start-session", activeSocket.id);
       console.log("connected from ", activeSocket.id);
     }
-    // setActiveSocket(sock);
     setUserContext(1);
+  };
+
+  const clickJoinRoom = () => {
+    if (activeSocket !== null) {
+      activeSocket.emit("guest-join-session", activeSocket.id);
+      console.log("connected from ", activeSocket.id);
+    }
   };
 
   return (

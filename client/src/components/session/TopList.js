@@ -15,14 +15,19 @@ const ListWrapper = styled.div`
   text-align: center;
 `;
 
+const List = styled.div``;
+
 const ListItem = styled.li`
   margin: 15px;
   text-align: left;
   background-color: lightblue;
   border-radius: 20px;
+  list-style: none;
 `;
 
-const List = styled.div``;
+const ListText = styled.p`
+  margin-left: 10px;
+`;
 
 export const TopList = () => {
   const { topQuestions, setTopQuestions } = useContext(TopQuestionContext);
@@ -31,7 +36,9 @@ export const TopList = () => {
   useEffect(() => {
     setRenderedQuestions(() => {
       return topQuestions.map((questionInfo) => (
-        <ListItem>{questionInfo.question}</ListItem>
+        <ListItem>
+          <ListText>{questionInfo.question}</ListText>
+        </ListItem>
       ));
     });
     console.log(topQuestions);

@@ -68,7 +68,6 @@ const emitPermissionGranted = (roomID) => {};
 const addRoom = async (inSocket) => {
   const id = Math.floor(Math.random() * 90000) + 10000;
 
-  console.log("lol");
   try {
     if (inSocket === undefined) return;
 
@@ -83,8 +82,6 @@ const addRoom = async (inSocket) => {
   } catch (err) {
     console.error(err.message);
   }
-
-  console.log("lol2");
 };
 
 //DATABASE PROCEDURES
