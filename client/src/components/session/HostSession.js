@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
+import { FlexDivX, FlexDivY, GridDiv, GridItem } from "../styledUI/Conatainers";
 
 import { SocketInfo } from "../../contexts/SocketInfo";
 import { SessionState } from "../../contexts/SessionState";
@@ -11,19 +12,19 @@ import { ChronologicalList } from "./ChronologicalList";
 import { TopList } from "./TopList";
 import { QuestionForm } from "./QuestionForm";
 
-const SessionWrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  overflow-y: hidden;
-  max-width: 800px;
-  margin: 0 auto;
+const TopQuestionDiv = styled.div`
+  grid-column: 1/5;
+  grid-row 2/4;
 `;
 
-const ListContainer = styled.div`
-  display: flex;
-  flex-direction: row;
+const NewQuestionsDiv = styled.div`
+  grid-column: 6/12;
+  grid-row 2/4;
+`;
+
+const InputWrapper = styled.div`
+grid-column: 1/12;
+grid-row 5/6;
 `;
 
 export const HostSession = () => {
@@ -55,16 +56,20 @@ export const HostSession = () => {
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
   return (
-    <SessionWrapper>
-      <ListContainer>
+    <GridDiv>
+      <NewQuestionsDiv>
         <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
           <ChronologicalList />
         </NewQuestionContext.Provider>
+      </NewQuestionsDiv>
+      <TopQuestionDiv>
         <TopQuestionContext.Provider value={{ topQuestions, setTopQuestions }}>
           <TopList />
         </TopQuestionContext.Provider>
-      </ListContainer>
-      <QuestionForm />
-    </SessionWrapper>
+      </TopQuestionDiv>
+      <InputWrapper>
+        <QuestionForm />
+      </InputWrapper>
+    </GridDiv>
   );
 };

@@ -14,7 +14,7 @@ import { SocketInfo } from "./contexts/SocketInfo";
 const sock = io("http://localhost:6800");
 
 function App() {
-  const [userContext, setUserContext] = useState(0);
+  const [userContext, setUserContext] = useState(1);
 
   const [activeSocket, setActiveSocket] = useState(sock);
 

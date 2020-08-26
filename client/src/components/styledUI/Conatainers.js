@@ -1,8 +1,6 @@
 import React from "react";
 
 import styled from "styled-components";
-import { css } from "styled-components";
-import { gridCSS } from "./CSS";
 
 export const FlexDivX = styled.div`
   display: flex;
@@ -20,8 +18,11 @@ export const FlexDivY = styled.div`
 `;
 
 export const GridDiv = styled.div`
-  ${gridCSS}
-  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  height: 100vh;
   width: 100%;
 `;
 
