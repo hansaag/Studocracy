@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
 
     socket.join(`${pin}`);
     addRoom(pin, socket.id);
-    socket.emit("room-pin", `${pin}`);
+    io.to(`${pin}`).emit("room-pin", `${pin}`);
   });
 
   socket.on("guest-join-session", (id, pin) => {
