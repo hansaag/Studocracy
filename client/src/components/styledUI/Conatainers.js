@@ -20,33 +20,28 @@ export const FlexDivY = styled.div`
 export const GridDiv = styled.div`
   display: grid;
   grid-template-columns: 12, 1fr;
-  grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
-  height: 96vh;
-  width: 96%;
-  margin: 1vh 1vw 1vh 1vw;
+  grid-gap: 10px;
+  height: 90vh;
+  width: 98%;
+  margin: 0 1% 1% 1%;
   overflow: hidden;
 `;
 
 export const TopNav = styled.nav`
   grid-column: 1/12;
   grid-row: 1;
+  background-color: lightblue;
 
-  display: grid;
-  grid-template-columns: 12, 1fr;
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-  margin: 1% 1% 1% 1%;
-  overflow: hidden;
+  height: 10vh;
+  width: 100%;
 `;
 
 export const NavContainer = styled.div`
   display: grid;
   grid-template-columns: 12, 1fr;
   grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-  height: 96vh;
-  width: 96%;
+  grid-auto-rows: minmax(70px, auto);
   margin: 1vh 1vw 1vh 1vw;
   overflow: hidden;
 `;

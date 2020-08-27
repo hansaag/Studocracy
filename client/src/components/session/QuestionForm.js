@@ -17,7 +17,7 @@ const InputContainer = styled.div`
 `;
 const InputArea = styled.textarea`
   width: 80%;
-  height: 12vh;
+  height: 10vh;
 `;
 
 const SendButton = styled.img``;

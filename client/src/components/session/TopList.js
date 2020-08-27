@@ -6,7 +6,6 @@ import { TopQuestionContext } from "../../contexts/TopQuestionContext";
 
 const ListWrapper = styled.div`
   margin: 0 auto;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

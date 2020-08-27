@@ -7,7 +7,6 @@ import {
   GridItem,
   TopNav,
 } from "../styledUI/Conatainers";
-import { NavBar } from "../navigationBar/NavBar";
 
 import { SocketInfo } from "../../contexts/SocketInfo";
 import { SessionState } from "../../contexts/SessionState";
@@ -18,15 +17,16 @@ import { NewQuestionContext } from "../../contexts/NewQuestionContext";
 import { ChronologicalList } from "./ChronologicalList";
 import { TopList } from "./TopList";
 import { QuestionForm } from "./QuestionForm";
+import { NavBar } from "../navigationBar/NavBar";
 
 const TopQuestionDiv = styled.div`
   grid-column: 1/5;
-  grid-row 2/4;
+  grid-row 1/4;
 `;
 
 const NewQuestionsDiv = styled.div`
   grid-column: 6/12;
-  grid-row 2/4;
+  grid-row 1/4;
 `;
 
 const InputWrapper = styled.div`
@@ -63,21 +63,27 @@ export const HostSession = () => {
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
   return (
-    <GridDiv>
+    <FlexDivY>
       <NavBar />
-      <NewQuestionsDiv>
-        <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
-          <ChronologicalList />
-        </NewQuestionContext.Provider>
-      </NewQuestionsDiv>
-      <TopQuestionDiv>
-        <TopQuestionContext.Provider value={{ topQuestions, setTopQuestions }}>
-          <TopList />
-        </TopQuestionContext.Provider>
-      </TopQuestionDiv>
-      <InputWrapper>
-        <QuestionForm />
-      </InputWrapper>
-    </GridDiv>
+      <GridDiv>
+        <NewQuestionsDiv>
+          <NewQuestionContext.Provider
+            value={{ newQuestions, setNewQuestions }}
+          >
+            <ChronologicalList />
+          </NewQuestionContext.Provider>
+        </NewQuestionsDiv>
+        <TopQuestionDiv>
+          <TopQuestionContext.Provider
+            value={{ topQuestions, setTopQuestions }}
+          >
+            <TopList />
+          </TopQuestionContext.Provider>
+        </TopQuestionDiv>
+        <InputWrapper>
+          <QuestionForm />
+        </InputWrapper>
+      </GridDiv>
+    </FlexDivY>
   );
 };
