@@ -1,6 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { FlexDivX, FlexDivY, GridDiv, GridItem } from "../styledUI/Conatainers";
+import {
+  FlexDivX,
+  FlexDivY,
+  GridDiv,
+  GridItem,
+  TopNav,
+} from "../styledUI/Conatainers";
+import { NavBar } from "../navigationBar/NavBar";
 
 import { SocketInfo } from "../../contexts/SocketInfo";
 import { SessionState } from "../../contexts/SessionState";
@@ -57,6 +64,7 @@ export const HostSession = () => {
 
   return (
     <GridDiv>
+      <NavBar />
       <NewQuestionsDiv>
         <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
           <ChronologicalList />

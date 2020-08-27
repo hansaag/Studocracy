@@ -1,9 +1,18 @@
 import React, { useContext } from "react";
 import io from "socket.io-client";
+import styled from "styled-components";
+
+import { NavBar } from "../navigationBar/NavBar";
+
 import { SocketInfo } from "../../contexts/SocketInfo";
 import { SessionState } from "../../contexts/SessionState";
-import { FlexDivX, FlexDivY, GridDiv, GridItem } from "../styledUI/Conatainers";
-import styled from "styled-components";
+import {
+  FlexDivX,
+  FlexDivY,
+  GridDiv,
+  GridItem,
+  TopNav,
+} from "../styledUI/Conatainers";
 
 const Header = styled(GridItem)`
   grid-column: 1/12;
@@ -54,7 +63,7 @@ export const Menu = () => {
 
   return (
     <GridDiv>
-      <Header>Header</Header>
+      <TopNav>Header</TopNav>
 
       <HostButton onClick={clickStartRoom}>Host game</HostButton>
       <JoinButton onClick={clickJoinRoom}>Join game</JoinButton>

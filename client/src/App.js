@@ -13,6 +13,8 @@ import { SocketInfo } from "./contexts/SocketInfo";
 //placed above render method to prevent generating new cocket on rerender
 const sock = io("http://localhost:6800");
 
+//gartner: lag en div med fast størrelse til bildet...prøv grid senere
+
 function App() {
   const [userContext, setUserContext] = useState(1);
 
