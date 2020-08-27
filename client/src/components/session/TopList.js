@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 
 import { TopQuestionContext } from "../../contexts/TopQuestionContext";
+import { SessionState } from "../../contexts/SessionState";
 
 const ListWrapper = styled.div`
   margin: 0 auto;

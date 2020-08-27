@@ -11,10 +11,6 @@ app.use(express.json());
 const port = 6800;
 const ip = "http://localhost:";
 
-const hosts = [];
-const users = [];
-const rooms = [];
-
 http.listen(port, () => {
   console.log(`listening on *: ${port}`);
 });
@@ -46,12 +42,8 @@ io.on("connection", (socket) => {
   socket.on("host-start-session", (id) => {
     console.log("host starting session");
     //validate pin --start session (socket.data = data f.eks)
-    const pin = Math.floor(Math.random() * 90000) + 10000;
-    console.log(pin);
 
-    socket.join(`${pin}`);
-    addRoom(pin, socket.id);
-    io.to(`${pin}`).emit("room-pin", `${pin}`);
+    addRoom(socket);
   });
 
   socket.on("guest-join-session", (id, pin) => {
@@ -60,7 +52,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("question-sent", (data) => {
-    //submit comment -- later add a time check since last comment
+    //submit comment -- later add a time check since last
+    //comment as well as high upvotes -> extra rights
     console.log(data);
   });
 });
@@ -69,23 +62,26 @@ io.on("connection", (socket) => {
 
 const emitPermissionGranted = (roomID) => {};
 
-const emitRoomPin = (socket, pin) => {
-  console.log("pin emitted:", pin);
-};
-
 //GENERAL PROCEDURES
 
-const addRoom = async (pin, socket) => {
+const addRoom = async (socket) => {
   try {
     if (socket === undefined) return;
+    let roomSerial;
+    id = socket["id"];
+    const pin = Math.floor(Math.random() * 90000) + 10000;
+    console.log(pin);
+    socket.join(`${pin}`);
 
-    const body = { pin, socket };
-    const response = await fetch(`${ip}${port}/rooms`, {
+    const body = { pin, id };
+    await fetch(`${ip}${port}/rooms`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
-    });
-    console.log(pin, "added to db");
+    }).then((res) => console.log(res));
+    // .then(() => {
+    //   io.to(`${pin}`).emit("room-pin", `${pin}`, `${roomSerial}`);
+    // });
   } catch (err) {
     console.error("add room error", err.message);
   }
@@ -94,11 +90,12 @@ const addRoom = async (pin, socket) => {
 //DATABASE PROCEDURES
 app.post(`/rooms`, async (req, res) => {
   try {
-    const { pin, socket } = req.body;
-    const newHost = await pool.query(
-      "INSERT INTO rooms (room_id, host_socket) VALUES($1, $2)",
-      [pin, socket]
+    const { pin, id } = req.body;
+    const newSerial = await pool.query(
+      "INSERT INTO rooms (room_id, host_socket) VALUES($1, $2) returning serial_nr;",
+      [pin, id]
     );
+    return newSerial.json;
   } catch (err) {
     console.error(err.message);
   }

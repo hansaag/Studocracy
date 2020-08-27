@@ -9,8 +9,7 @@ import {
   NavContainer,
 } from "../styledUI/Conatainers";
 
-import { SocketInfo } from "../../contexts/SocketInfo";
-import { RoomPinContext } from "../../contexts/RoomPinContext";
+import { SessionState } from "../../contexts/SessionState";
 
 const TimerBox = styled.div`
   grid-column: 1/2;
@@ -28,17 +27,16 @@ const ParticipantBox = styled.div`
 `;
 
 export const NavBar = () => {
-  const { activeSocket, setActiveSocket } = useContext(SocketInfo);
-  const { roomPin, setRoomPin } = useContext(RoomPinContext);
+  const { userContext, setUserContext } = useContext(SessionState);
 
-  useEffect(() => {}, [roomPin]);
+  useEffect(() => {}, [userContext["roomPin"]]);
 
   return (
     <TopNav>
       <NavContainer>
         <TimerBox>Time</TimerBox>
         <SessionPinBox>
-          Pin: <br /> {activeSocket.roomPin}
+          Pin: <br /> {userContext["roomPin"]}
         </SessionPinBox>
         <ParticipantBox>Nr of participants</ParticipantBox>
       </NavContainer>

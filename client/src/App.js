@@ -17,28 +17,38 @@ const sock = io("http://localhost:6800");
 //gartner: lag en div med fast størrelse til bildet...prøv grid senere
 
 function App() {
-  const [userContext, setUserContext] = useState(0);
-  const [roomPin, setRoomPin] = useState(null);
-  const [activeSocket, setActiveSocket] = useState(sock);
-
-  activeSocket.on("room-pin", (pin) => {
-    console.log("pin recieved from server: ", pin);
-    setRoomPin(pin);
+  const [userContext, setUserContext] = useState({
+    appContext: 0,
+    roomPin: null,
+    activeSocket: sock,
+    serial: null,
   });
 
-  useEffect(() => {}, [userContext]);
+  userContext["activeSocket"].on("room-pin", (pin, roomSerial) => {
+    console.log("pin recieved from server: ", pin, roomSerial);
+    setUserContext((prev) => {
+      return { ...prev, pin: pin, serial: roomSerial };
+    });
+  });
+
+  userContext["activeSocket"].on("room-access", () => {
+    console.log("room access received");
+    setUserContext((prev) => {
+      return { ...prev, appContext: 2 };
+    });
+  });
+
+  useEffect(() => {
+    console.log(userContext["appContext"]);
+  }, [userContext["appContext"]]);
 
   return (
-    <SocketInfo.Provider value={{ activeSocket, setActiveSocket }}>
-      <SessionState.Provider value={{ userContext, setUserContext }}>
-        <RoomPinContext.Provider value={{ roomPin, setRoomPin }}>
-          {userContext === 0 && <Menu />}
-          {userContext === 1 && <HostSession />}
-          {userContext === 2 && <ParticipantSession />}
-          {userContext === 3 && <PostSession />}
-        </RoomPinContext.Provider>
-      </SessionState.Provider>
-    </SocketInfo.Provider>
+    <SessionState.Provider value={{ userContext, setUserContext }}>
+      {userContext["appContext"] === 0 && <Menu />}
+      {userContext["appContext"] === 1 && <HostSession />}
+      {userContext["appContext"] === 2 && <ParticipantSession />}
+      {userContext["appContext"] === 3 && <PostSession />}
+    </SessionState.Provider>
   );
 }
 

@@ -1,8 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { FlexDivX, FlexDivY, GridDiv, GridItem } from "../styledUI/Conatainers";
+import {
+  FlexDivX,
+  FlexDivY,
+  GridDiv,
+  GridItem,
+  TopNav,
+} from "../styledUI/Conatainers";
 
-import { SocketInfo } from "../../contexts/SocketInfo";
 import { SessionState } from "../../contexts/SessionState";
 
 import { TopQuestionContext } from "../../contexts/TopQuestionContext";
@@ -52,25 +57,36 @@ export const ParticipantSession = () => {
     { id: 2, question: "Jeg liker kalver?" },
   ];
   const { userContext, setUserContext } = useContext(SessionState);
-  const { activeSocket, setActiveSocket } = useContext(SocketInfo);
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
+  const registerQuestion = useCallback((question) => {
+    console.log("question submitted: ", question);
+    userContext["activeSocket"].emit("question-sent", question);
+  });
+
   return (
-    <GridDiv>
-      <NewQuestionsDiv>
-        <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
-          <ChronologicalList />
-        </NewQuestionContext.Provider>
-      </NewQuestionsDiv>
-      <TopQuestionDiv>
-        <TopQuestionContext.Provider value={{ topQuestions, setTopQuestions }}>
-          <TopList />
-        </TopQuestionContext.Provider>
-      </TopQuestionDiv>
-      <InputWrapper>
-        <QuestionForm />
-      </InputWrapper>
-    </GridDiv>
+    <FlexDivY>
+      <NavBar />
+      <GridDiv>
+        <NewQuestionsDiv>
+          <NewQuestionContext.Provider
+            value={{ newQuestions, setNewQuestions }}
+          >
+            <ChronologicalList />
+          </NewQuestionContext.Provider>
+        </NewQuestionsDiv>
+        <TopQuestionDiv>
+          <TopQuestionContext.Provider
+            value={{ topQuestions, setTopQuestions }}
+          >
+            <TopList />
+          </TopQuestionContext.Provider>
+        </TopQuestionDiv>
+        <InputWrapper>
+          <QuestionForm submit={registerQuestion} />
+        </InputWrapper>
+      </GridDiv>
+    </FlexDivY>
   );
 };

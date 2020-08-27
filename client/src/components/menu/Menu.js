@@ -32,32 +32,39 @@ const HostButton = styled(GridItem)`
 
 export const Menu = () => {
   const { userContext, setUserContext } = useContext(SessionState);
-  const { activeSocket, setActiveSocket } = useContext(SocketInfo);
   const dummyConnect = "1234";
 
-  activeSocket.on("room-access", () => {
-    console.log("room access received");
-    setUserContext(2);
-  });
-
-  activeSocket.on("room-denied", () => {
+  userContext["activeSocket"].on("room-denied", () => {
     console.log("room access denied");
     //display error toast
   });
 
   const clickStartRoom = () => {
-    console.log(activeSocket.id);
-    if (activeSocket !== null) {
-      activeSocket.emit("host-start-session", activeSocket.id);
-      console.log("connected from ", activeSocket.id);
+    console.log(userContext["activeSocket"].id);
+    if (userContext["activeSocket"] !== null) {
+      userContext["activeSocket"].emit(
+        "host-start-session",
+        userContext["activeSocket"].id
+      );
+      console.log("connected from ", userContext["activeSocket"].id);
     }
-    setUserContext(1);
+    setUserContext((prev) => {
+      return { ...prev, appContext: 1 };
+    });
   };
 
   const clickJoinRoom = () => {
-    if (activeSocket !== null) {
-      activeSocket.emit("guest-join-session", activeSocket.id, dummyConnect);
-      console.log("connected from ", activeSocket.id, dummyConnect);
+    if (userContext["activeSocket"] !== null) {
+      userContext["activeSocket"].emit(
+        "guest-join-session",
+        userContext["activeSocket"].id,
+        dummyConnect
+      );
+      console.log(
+        "connected from ",
+        userContext["activeSocket"].id,
+        dummyConnect
+      );
     }
   };
 

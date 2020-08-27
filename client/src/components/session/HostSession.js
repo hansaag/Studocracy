@@ -8,7 +8,6 @@ import {
   TopNav,
 } from "../styledUI/Conatainers";
 
-import { SocketInfo } from "../../contexts/SocketInfo";
 import { SessionState } from "../../contexts/SessionState";
 
 import { TopQuestionContext } from "../../contexts/TopQuestionContext";
@@ -58,13 +57,12 @@ export const HostSession = () => {
     { id: 2, question: "Jeg liker kalver?" },
   ];
   const { userContext, setUserContext } = useContext(SessionState);
-  const { activeSocket, setActiveSocket } = useContext(SocketInfo);
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
   const registerQuestion = useCallback((question) => {
     console.log("question submitted: ", question);
-    activeSocket.emit("question-sent", question);
+    userContext["activeSocket"].emit("question-sent", question);
   });
 
   return (
