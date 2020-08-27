@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import {
   FlexDivX,
@@ -62,6 +62,11 @@ export const HostSession = () => {
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
+  const registerQuestion = useCallback((question) => {
+    console.log("question submitted: ", question);
+    activeSocket.emit("question-sent", question);
+  });
+
   return (
     <FlexDivY>
       <NavBar />
@@ -81,7 +86,7 @@ export const HostSession = () => {
           </TopQuestionContext.Provider>
         </TopQuestionDiv>
         <InputWrapper>
-          <QuestionForm />
+          <QuestionForm submit={registerQuestion} />
         </InputWrapper>
       </GridDiv>
     </FlexDivY>

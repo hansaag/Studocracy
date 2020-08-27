@@ -20,14 +20,26 @@ const InputArea = styled.textarea`
   height: 10vh;
 `;
 
+const SubmitButton = styled.div`
+  height: 10vh;
+  width: 20%;
+`;
+
 const SendButton = styled.img``;
 
-export const QuestionForm = () => {
+export const QuestionForm = ({ submit }) => {
   return (
     <Qform>
       <FormHeader>Still spørsmål</FormHeader>
       <InputContainer>
-        <InputArea></InputArea>
+        <InputArea id="input-question"></InputArea>
+        <SubmitButton
+          onClick={() =>
+            submit(document.getElementById("input-question").value)
+          }
+        >
+          Submit
+        </SubmitButton>
       </InputContainer>
     </Qform>
   );

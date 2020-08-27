@@ -10,6 +10,10 @@ const ListWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   text-align: center;
+
+  & h2 {
+    color: ;
+  }
 `;
 
 const List = styled.div`

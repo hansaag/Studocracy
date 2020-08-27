@@ -59,8 +59,9 @@ io.on("connection", (socket) => {
     console.log("recieved", id, pin);
   });
 
-  socket.on("comment-submit", (data) => {
+  socket.on("question-sent", (data) => {
     //submit comment -- later add a time check since last comment
+    console.log(data);
   });
 });
 
