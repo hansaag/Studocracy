@@ -42,8 +42,11 @@ io.on("connection", (socket) => {
   socket.on("host-start-session", (id) => {
     console.log("host starting session");
     //validate pin --start session (socket.data = data f.eks)
+    const pin = Math.floor(Math.random() * 90000) + 10000;
+    console.log(pin);
+    socket.join(`${pin}`);
 
-    addRoom(socket);
+    addRoom(socket, pin);
   });
 
   socket.on("guest-join-session", (id, pin) => {
@@ -64,24 +67,18 @@ const emitPermissionGranted = (roomID) => {};
 
 //GENERAL PROCEDURES
 
-const addRoom = async (socket) => {
+const addRoom = async (socket, pin) => {
   try {
     if (socket === undefined) return;
-    let roomSerial;
+
     id = socket["id"];
-    const pin = Math.floor(Math.random() * 90000) + 10000;
-    console.log(pin);
-    socket.join(`${pin}`);
 
     const body = { pin, id };
     await fetch(`${ip}${port}/rooms`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
-    }).then((res) => console.log(res));
-    // .then(() => {
-    //   io.to(`${pin}`).emit("room-pin", `${pin}`, `${roomSerial}`);
-    // });
+    });
   } catch (err) {
     console.error("add room error", err.message);
   }
@@ -95,7 +92,11 @@ app.post(`/rooms`, async (req, res) => {
       "INSERT INTO rooms (room_id, host_socket) VALUES($1, $2) returning serial_nr;",
       [pin, id]
     );
-    return newSerial.json;
+    io.to(`${pin}`).emit(
+      "room-pin",
+      `${pin}`,
+      `${newSerial.rows[0]["serial_nr"]}`
+    );
   } catch (err) {
     console.error(err.message);
   }
