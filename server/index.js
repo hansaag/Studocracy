@@ -40,13 +40,16 @@ io.on("connection", (socket) => {
     console.log("guest disconnected");
   });
 
-  socket.on("host-start-session", (id) => {
+  socket.on("host-start-session", () => {
     console.log("host starting session");
     //validate pin --start session (socket.data = data f.eks)
     const pin = Math.floor(Math.random() * 90000) + 10000;
+
     console.log(pin);
     socket.join(`${pin}`);
-    addRoom(id, pin);
+    io.to(`${socket.id}`).emit("room-pin", `${pin}`);
+    console.log(io.in(`${pin}`).clients().id);
+    addRoom(socket.id, pin);
   });
 
   socket.on("guest-join-session", (id, pin) => {

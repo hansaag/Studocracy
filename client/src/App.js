@@ -24,14 +24,14 @@ function App() {
     serial: null,
   });
 
-  userContext["activeSocket"].on("room-pin", (pin) => {
+  sock.on("room-pin", (pin) => {
     console.log("pin recieved from server: ", pin);
     setUserContext((prev) => {
       return { ...prev, roomPin: pin };
     });
   });
 
-  userContext["activeSocket"].on("room-access", () => {
+  sock.on("room-access", () => {
     console.log("room access received");
     setUserContext((prev) => {
       return { ...prev, appContext: 2 };
