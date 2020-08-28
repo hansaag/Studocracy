@@ -30,7 +30,7 @@ const HostButton = styled(GridItem)`
   grid-row: 2;
 `;
 
-export const Menu = () => {
+export const Menu = ({ startRoom }) => {
   const { userContext, setUserContext } = useContext(SessionState);
   const dummyConnect = "1234";
 
@@ -38,20 +38,6 @@ export const Menu = () => {
     console.log("room access denied");
     //display error toast
   });
-
-  const clickStartRoom = () => {
-    console.log(userContext["activeSocket"].id);
-    if (userContext["activeSocket"] !== null) {
-      userContext["activeSocket"].emit(
-        "host-start-session",
-        userContext["activeSocket"].id
-      );
-      console.log("connected from ", userContext["activeSocket"].id);
-    }
-    setUserContext((prev) => {
-      return { ...prev, appContext: 1 };
-    });
-  };
 
   const clickJoinRoom = () => {
     if (userContext["activeSocket"] !== null) {
@@ -72,7 +58,7 @@ export const Menu = () => {
     <GridDiv>
       <TopNav>Header</TopNav>
 
-      <HostButton onClick={clickStartRoom}>Host game</HostButton>
+      <HostButton onClick={startRoom}>Host game</HostButton>
       <JoinButton onClick={clickJoinRoom}>Join game</JoinButton>
     </GridDiv>
   );

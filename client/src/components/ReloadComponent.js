@@ -8,16 +8,16 @@ import { PostSession } from "../components/postSession/PostSession";
 import { SessionState } from "../contexts/SessionState";
 import { FlexDivY } from "../components/styledUI/Conatainers";
 
-export const ReloadComponent = () => {
+export const ReloadComponent = ({ startRoom }) => {
   const { userContext, setUserContext } = useContext(SessionState);
 
   useEffect(() => {
-    console.log(userContext["appContext"]);
+    console.log("user context from reload comp: ", userContext["appContext"]);
   }, [userContext["appContext"]]);
 
   return (
     <FlexDivY>
-      {userContext["appContext"] === 0 && <Menu />}
+      {userContext["appContext"] === 0 && <Menu startRoom={startRoom} />}
       {userContext["appContext"] === 1 && <HostSession />}
       {userContext["appContext"] === 2 && <ParticipantSession />}
       {userContext["appContext"] === 3 && <PostSession />}
