@@ -3,6 +3,7 @@ const fetch = require("node-fetch");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+const { json } = require("express");
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 app.use(cors());
@@ -58,7 +59,8 @@ io.on("connection", (socket) => {
     //submit comment -- later add a time check since last
     //comment as well as high upvotes -> extra rights
     console.log(data.user);
-    addQuestion(data.room, data.question, data.user);
+    const newQuestion = addQuestion(data.room, data.question, data.user);
+    io.to(`${data.room}`).emit("new-question", newQuestion);
   });
 });
 
@@ -98,24 +100,26 @@ const addUser = async (roomPin, userSocket, host) => {
   }
 };
 
-const addQuestion = async (room, question, user) => {
+const addQuestion = (room, question, user) => {
   try {
     const body = { room, question, user };
-    await fetch(`${ip}${port}/questions`, {
+    const newQuestion = fetch(`${ip}${port}/questions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
+    const stringData = JSON.stringify(newQuestion);
+    return stringData;
   } catch (err) {
     console.error("add room error", err.message);
   }
 };
 
 // GET
-const getAllQuestions = async (pin) => {
+const getAllQuestions = (pin) => {
   try {
     const params = { pin };
-    await fetch(`${ip}${port}/questions/${pin}`);
+    fetch(`${ip}${port}/questions/${pin}`);
   } catch (err) {
     console.error(err.message);
   }
@@ -156,11 +160,11 @@ app.post("/questions", async (req, res) => {
   try {
     const { room, question, user } = req.body;
     const newQuestion = await pool.query(
-      "INSERT INTO questions (question_room_pin, question, user_asked) VALUES ($1, $2, $3) returning submit_time;",
+      "INSERT INTO questions (question_room_pin, question, user_asked) VALUES ($1, $2, $3) returning *",
       [room, question, user]
     );
     console.log("question submitted at: ", newQuestion.rows[0]["submit_time"]);
-    getAllQuestions(room);
+    res.json(newQuestion);
   } catch (err) {
     console.error(err.message);
   }
@@ -176,9 +180,7 @@ app.get("/questions/:pin", async (req, res) => {
       "SELECT * from questions where question_room_pin = $1;",
       [pin]
     );
-    const stringData = JSON.stringify(allQuestions);
-
-    io.to(`${pin}`).emit("refresh-questions", stringData);
+    res.json(allQuestions);
   } catch (err) {
     console.error(err.message);
   }
