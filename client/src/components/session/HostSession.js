@@ -60,9 +60,23 @@ export const HostSession = () => {
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
+  userContext["activeSocket"].on("refresh-questions", (data) => {
+    console.log("data recieved after question");
+    console.log(data);
+  });
+
   const registerQuestion = useCallback((question) => {
     console.log("question submitted: ", question);
-    userContext["activeSocket"].emit("question-sent", question);
+    console.log({
+      user: userContext["activeSocket"],
+      question: question,
+      room: userContext["roomPin"],
+    });
+    userContext["activeSocket"].emit("question-sent", {
+      user: userContext["activeSocket"].id,
+      question: question,
+      room: userContext["roomPin"],
+    });
   });
 
   return (

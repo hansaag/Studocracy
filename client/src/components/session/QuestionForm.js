@@ -23,6 +23,7 @@ const InputArea = styled.textarea`
 const SubmitButton = styled.div`
   height: 10vh;
   width: 20%;
+  text-align: center;
 `;
 
 const SendButton = styled.img``;

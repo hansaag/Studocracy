@@ -45,8 +45,8 @@ io.on("connection", (socket) => {
     const pin = Math.floor(Math.random() * 90000) + 10000;
     console.log(pin);
     socket.join(`${pin}`);
-
-    addRoom(socket, pin);
+    io.to(`${pin}`).emit("room-pin", `${pin}`);
+    addRoom(socket.id, pin);
   });
 
   socket.on("guest-join-session", (id, pin) => {
@@ -57,7 +57,8 @@ io.on("connection", (socket) => {
   socket.on("question-sent", (data) => {
     //submit comment -- later add a time check since last
     //comment as well as high upvotes -> extra rights
-    console.log(data);
+    console.log(data.user);
+    addQuestion(data.room, data.question, data.user);
   });
 });
 
@@ -67,11 +68,11 @@ const emitPermissionGranted = (roomID) => {};
 
 //GENERAL PROCEDURES
 
-const addRoom = async (socket, pin) => {
-  try {
-    if (socket === undefined) return;
+//POST
 
-    id = socket["id"];
+const addRoom = async (id, pin) => {
+  try {
+    if (id === undefined) return;
 
     const body = { pin, id };
     await fetch(`${ip}${port}/rooms`, {
@@ -84,19 +85,100 @@ const addRoom = async (socket, pin) => {
   }
 };
 
-//DATABASE PROCEDURES
+const addUser = async (roomPin, userSocket, host) => {
+  try {
+    const body = { roomPin, userSocket, host };
+    await fetch(`${ip}${port}/active_users`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+const addQuestion = async (room, question, user) => {
+  try {
+    const body = { room, question, user };
+    await fetch(`${ip}${port}/questions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch (err) {
+    console.error("add room error", err.message);
+  }
+};
+
+// GET
+const getAllQuestions = async (pin) => {
+  try {
+    const params = { pin };
+    await fetch(`${ip}${port}/questions/${pin}`);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+/* The following procedures are routes to the DB with accompanying actions  */
+
+//POST
 app.post(`/rooms`, async (req, res) => {
   try {
     const { pin, id } = req.body;
     const newSerial = await pool.query(
-      "INSERT INTO rooms (room_id, host_socket) VALUES($1, $2) returning serial_nr;",
+      "INSERT INTO rooms (room_id, host_socket) VALUES($1, $2);",
       [pin, id]
     );
-    io.to(`${pin}`).emit(
-      "room-pin",
-      `${pin}`,
-      `${newSerial.rows[0]["serial_nr"]}`
+    addUser(pin, id, true);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.post(`/active_users`, async (req, res) => {
+  try {
+    const { roomPin, userSocket, host } = req.body;
+    const newUser = await pool.query(
+      "INSERT INTO active_users (user_room_pin, user_socket, host) VALUES($1, $2, $3);",
+      [roomPin, userSocket, host]
     );
+    console.log("user added: id= ", userSocket, " room= ", roomPin);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+// returnere hvert spørsmål direkte tilbake til klientene i rommet, eller returnere den oppdaterte listen? Samme gjelder upvotes
+
+app.post("/questions", async (req, res) => {
+  try {
+    const { room, question, user } = req.body;
+    const newQuestion = await pool.query(
+      "INSERT INTO questions (question_room_pin, question, user_asked) VALUES ($1, $2, $3) returning submit_time;",
+      [room, question, user]
+    );
+    console.log("question submitted at: ", newQuestion.rows[0]["submit_time"]);
+    getAllQuestions(room);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//GET
+
+//get all questions submitted in a specific room
+app.get("/questions/:pin", async (req, res) => {
+  try {
+    const { pin } = req.params;
+    const allQuestions = await pool.query(
+      "SELECT * from questions where question_room_pin = $1;",
+      [pin]
+    );
+    const stringData = JSON.stringify(allQuestions);
+
+    io.to(`${pin}`).emit("refresh-questions", stringData);
   } catch (err) {
     console.error(err.message);
   }

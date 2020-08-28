@@ -24,10 +24,10 @@ function App() {
     serial: null,
   });
 
-  userContext["activeSocket"].on("room-pin", (pin, roomSerial) => {
-    console.log("pin recieved from server: ", pin, roomSerial);
+  userContext["activeSocket"].on("room-pin", (pin) => {
+    console.log("pin recieved from server: ", pin);
     setUserContext((prev) => {
-      return { ...prev, pin: pin, serial: roomSerial };
+      return { ...prev, roomPin: pin };
     });
   });
 

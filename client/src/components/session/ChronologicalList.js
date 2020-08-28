@@ -35,8 +35,8 @@ export const ChronologicalList = () => {
 
   useEffect(() => {
     setRenderedQuestions(() => {
-      return newQuestions.map((questionInfo) => (
-        <ListItem>
+      return newQuestions.map((questionInfo, index) => (
+        <ListItem key={index}>
           <ListText>{questionInfo.question}</ListText>
         </ListItem>
       ));

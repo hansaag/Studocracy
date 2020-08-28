@@ -39,8 +39,8 @@ export const TopList = () => {
 
   useEffect(() => {
     setRenderedQuestions(() => {
-      return topQuestions.map((questionInfo) => (
-        <ListItem>
+      return topQuestions.map((questionInfo, index) => (
+        <ListItem key={index}>
           <ListText>{questionInfo.question}</ListText>
         </ListItem>
       ));
