@@ -46,8 +46,7 @@ io.on("connection", (socket) => {
     const pin = Math.floor(Math.random() * 90000) + 10000;
     console.log(pin);
     socket.join(`${pin}`);
-    io.to(`${pin}`).emit("room-pin", `${pin}`);
-    addRoom(socket.id, pin);
+    addRoom(id, pin);
   });
 
   socket.on("guest-join-session", (id, pin) => {
