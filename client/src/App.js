@@ -24,13 +24,6 @@ function App() {
     serial: null,
   });
 
-  socket.on("room-pin", (pin) => {
-    console.log("pin recieved from server: ", pin);
-    setUserContext((prev) => {
-      return { ...prev, roomPin: pin };
-    });
-  });
-
   socket.on("room-access", () => {
     console.log("room access received");
     setUserContext((prev) => {
@@ -47,8 +40,11 @@ function App() {
       );
       console.log("connected from ", userContext["activeSocket"].id);
     }
-    setUserContext((prev) => {
-      return { ...prev, appContext: 1 };
+    socket.on("room-pin", (pin) => {
+      console.log("pin recieved from server: ", pin);
+      setUserContext((prev) => {
+        return { ...prev, roomPin: pin, appContext: 1 };
+      });
     });
   });
 

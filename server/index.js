@@ -12,10 +12,6 @@ app.use(express.json());
 const port = 6800;
 const ip = "http://localhost:";
 
-http.listen(port, () => {
-  console.log(`listening on *: ${port}`);
-});
-
 /* CLIENT SIDE PROCEDURES (ABSTRACT)
 
 1) connect
@@ -40,6 +36,8 @@ io.on("connection", (socket) => {
     console.log("guest disconnected");
   });
 
+  //socket.removeAllListeners(room + '-newMessage'); til en metode
+
   //socket.off('MY_EVENT').on('MY_EVENT', () => doThisOnlyOnce());
   socket.on("host-start-session", () => {
     console.log("host starting session");
@@ -47,7 +45,7 @@ io.on("connection", (socket) => {
     const pin = Math.floor(Math.random() * 90000) + 10000;
 
     socket.join(`${pin}`);
-    io.to(`${socket.id}`).emit("room-pin", `${pin}`);
+    io.send(`${socket.id}`).emit("room-pin", `${pin}`);
     addRoom(socket.id, pin);
   });
 
@@ -185,4 +183,8 @@ app.get("/questions/:pin", async (req, res) => {
   } catch (err) {
     console.error(err.message);
   }
+});
+
+http.listen(port, () => {
+  console.log(`listening on *: ${port}`);
 });
