@@ -134,6 +134,7 @@ app.post(`/rooms`, async (req, res) => {
       "INSERT INTO rooms (room_id, host_socket) VALUES($1, $2);",
       [pin, id]
     );
+    console.log("room added: ", pin);
     addUser(pin, id, true);
   } catch (err) {
     console.error(err.message);
@@ -162,7 +163,7 @@ app.post("/questions", async (req, res) => {
       "INSERT INTO questions (question_room_pin, question, user_asked) VALUES ($1, $2, $3) returning *",
       [room, question, user]
     );
-    console.log("question submitted at: ", newQuestion.rows[0]["submit_time"]);
+    console.log("question submitted at: ", newQuestion.rows[0]["question"]);
     res.json(newQuestion);
   } catch (err) {
     console.error(err.message);

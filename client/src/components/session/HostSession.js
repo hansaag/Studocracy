@@ -60,16 +60,10 @@ export const HostSession = () => {
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
-  userContext["activeSocket"].on("new-question", (data) => {
-    console.log("current socket: ", userContext["activeSocket"].id);
-    const newQuestions = JSON.parse(data);
-    console.log(newQuestions);
-  });
-
   const registerQuestion = useCallback((question) => {
     console.log("question submitted: ", question);
     console.log({
-      user: userContext["activeSocket"],
+      user: userContext["activeSocket"].id,
       question: question,
       room: userContext["roomPin"],
     });

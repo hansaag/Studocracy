@@ -40,13 +40,16 @@ function App() {
       );
       console.log("connected from ", userContext["activeSocket"].id);
     }
+  });
+
+  useEffect(() => {
     socket.on("room-pin", (pin) => {
       console.log("pin recieved from server: ", pin);
       setUserContext((prev) => {
         return { ...prev, roomPin: pin, appContext: 1 };
       });
     });
-  });
+  }, []);
 
   return (
     <SessionState.Provider value={{ userContext, setUserContext }}>
