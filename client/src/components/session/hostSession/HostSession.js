@@ -6,17 +6,17 @@ import {
   GridDiv,
   GridItem,
   TopNav,
-} from "../styledUI/Conatainers";
+} from "../../styledUI/Conatainers";
 
-import { SessionState } from "../../contexts/SessionState";
+import { SessionState } from "../../../contexts/SessionState";
 
-import { TopQuestionContext } from "../../contexts/TopQuestionContext";
-import { NewQuestionContext } from "../../contexts/NewQuestionContext";
+import { TopQuestionContext } from "../../../contexts/TopQuestionContext";
+import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 import { ChronologicalList } from "./ChronologicalList";
 import { TopList } from "./TopList";
 import { QuestionForm } from "./QuestionForm";
-import { NavBar } from "../navigationBar/NavBar";
+import { NavBar } from "../../navigationBar/NavBar";
 
 const TopQuestionDiv = styled.div`
   grid-column: 1/5;
@@ -60,10 +60,15 @@ export const HostSession = () => {
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
-  userContext["activeSocket"].on("update-questions", (questions) => {
-    console.log(questions);
-    setNewQuestions(questions);
-  });
+  useEffect(() => {
+    if (userContext["appContext"] === 1) {
+      console.log("USER CONTEXT: ", userContext["appContext"]);
+      userContext["activeSocket"].on("update-questions", (questions) => {
+        console.log("host", questions);
+        setNewQuestions(questions);
+      });
+    }
+  }, []);
 
   return (
     <FlexDivY>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import io from "socket.io-client";
 import styled from "styled-components";
 
@@ -43,7 +43,6 @@ const InputArea = styled.textarea`
 
 export const Menu = () => {
   const { userContext, setUserContext } = useContext(SessionState);
-  const dummyConnect = "1234";
 
   userContext["activeSocket"].on("room-denied", () => {
     console.log("room access denied");
@@ -58,6 +57,15 @@ export const Menu = () => {
       possiblePin
     );
     console.log("connected from ", userContext["activeSocket"].id, possiblePin);
+    userContext["activeSocket"].on("room-access", (pin) => {
+      if (userContext["appContext"] === 0) {
+        console.log("room access received", pin);
+        setUserContext((prev) => {
+          console.log("previous usercontext: ", prev);
+          return { ...prev, roomPin: pin, appContext: 2 };
+        });
+      }
+    });
   };
 
   const clickStartRoom = () => {
@@ -68,7 +76,21 @@ export const Menu = () => {
       userContext["activeSocket"].id
     );
     console.log("connected from ", userContext["activeSocket"].id);
+    userContext["activeSocket"].on("room-pin", (pin) => {
+      console.log("pin recieved from server: ", pin);
+      setUserContext((prev) => {
+        return { ...prev, roomPin: pin, appContext: 1 };
+      });
+    });
   };
+
+  // useEffect(() => {
+
+  // }, [userContext["appContext"], userContext["appContext"] !== 1]);
+
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     <GridDiv>

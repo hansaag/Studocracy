@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 
 import styled from "styled-components";
 
-import { NewQuestionContext } from "../../contexts/NewQuestionContext";
+import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
   margin: 0 auto;

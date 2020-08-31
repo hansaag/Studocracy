@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 
-import send from "../../images/send.png";
+import send from "../../../images/send.png";
 
 const Qform = styled.form`
   display: flex;

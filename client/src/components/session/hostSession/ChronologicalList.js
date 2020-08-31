@@ -2,19 +2,15 @@ import React, { useState, useContext, useEffect } from "react";
 
 import styled from "styled-components";
 
-import { TopQuestionContext } from "../../contexts/TopQuestionContext";
-import { SessionState } from "../../contexts/SessionState";
+import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
   margin: 0 auto;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   text-align: center;
-
-  & h2 {
-    color: ;
-  }
 `;
 
 const List = styled.div`
@@ -33,24 +29,23 @@ const ListText = styled.p`
   margin-left: 10px;
 `;
 
-export const TopList = () => {
-  const { topQuestions, setTopQuestions } = useContext(TopQuestionContext);
+export const ChronologicalList = () => {
+  const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
 
   useEffect(() => {
     setRenderedQuestions(() => {
-      return topQuestions.map((questionInfo, index) => (
+      return newQuestions.map((questionInfo, index) => (
         <ListItem key={index}>
           <ListText>{questionInfo.question}</ListText>
         </ListItem>
       ));
     });
-    console.log(topQuestions);
-  }, [topQuestions]);
+  }, [newQuestions]);
 
   return (
     <ListWrapper>
-      <h2>Høyest rangert</h2>
+      <h2>Siste</h2>
       <List>{renderedQuestions}</List>
     </ListWrapper>
   );
