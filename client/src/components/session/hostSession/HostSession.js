@@ -72,7 +72,8 @@ export const HostSession = () => {
 
   return (
     <FlexDivY>
-      <NavBar />
+      <TopNav>Header</TopNav>
+
       <GridDiv>
         <NewQuestionsDiv>
           <NewQuestionContext.Provider

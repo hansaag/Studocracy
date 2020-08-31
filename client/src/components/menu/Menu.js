@@ -14,12 +14,6 @@ import {
   TopNav,
 } from "../styledUI/Conatainers";
 
-const Header = styled(GridItem)`
-  grid-column: 1/12;
-  grid-row: 1/2;
-  text-align: center;
-`;
-
 const JoinButton = styled(GridItem)`
   grid-column: 10/11;
   grid-row: 2;
@@ -84,26 +78,20 @@ export const Menu = () => {
     });
   };
 
-  // useEffect(() => {
-
-  // }, [userContext["appContext"], userContext["appContext"] !== 1]);
-
-  // useEffect(() => {
-
-  // }, []);
-
   return (
-    <GridDiv>
+    <FlexDivY>
       <TopNav>Header</TopNav>
 
-      <HostButton onClick={clickStartRoom}>
-        <h2>Host game</h2>
-      </HostButton>
-      <JoinButton>
-        <InputArea placeholder="Add room pin" id="room-pin-input"></InputArea>
-        <h2 onClick={clickJoinRoom}>Join game</h2>
-      </JoinButton>
-      <Footer></Footer>
-    </GridDiv>
+      <GridDiv>
+        <HostButton onClick={clickStartRoom}>
+          <h2>Host game</h2>
+        </HostButton>
+        <JoinButton>
+          <InputArea placeholder="Add room pin" id="room-pin-input"></InputArea>
+          <h2 onClick={clickJoinRoom}>Join game</h2>
+        </JoinButton>
+        <Footer></Footer>
+      </GridDiv>
+    </FlexDivY>
   );
 };
