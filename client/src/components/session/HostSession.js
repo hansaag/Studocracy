@@ -72,6 +72,9 @@ export const HostSession = () => {
       question: question,
       room: userContext["roomPin"],
     });
+    userContext["activeSocket"].on("update-questions", (questions) => {
+      setNewQuestions(questions);
+    });
   });
 
   return (

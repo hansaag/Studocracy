@@ -33,13 +33,12 @@ function App() {
 
   const clickStartRoom = useCallback(() => {
     console.log(userContext["activeSocket"].id);
-    if (userContext["activeSocket"] !== null) {
-      userContext["activeSocket"].emit(
-        "host-start-session",
-        userContext["activeSocket"].id
-      );
-      console.log("connected from ", userContext["activeSocket"].id);
-    }
+
+    userContext["activeSocket"].emit(
+      "host-start-session",
+      userContext["activeSocket"].id
+    );
+    console.log("connected from ", userContext["activeSocket"].id);
   });
 
   useEffect(() => {

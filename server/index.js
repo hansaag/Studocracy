@@ -58,8 +58,7 @@ io.on("connection", (socket) => {
     //submit comment -- later add a time check since last
     //comment as well as high upvotes -> extra rights
     console.log(data.user);
-    const newQuestion = addQuestion(data.room, data.question, data.user);
-    io.to(`${data.room}`).emit("new-question", newQuestion);
+    addQuestion(data.room, data.question, data.user);
   });
 });
 
@@ -72,24 +71,23 @@ const emitPermissionGranted = (roomID) => {};
 //POST
 
 const addRoom = async (id, pin) => {
+  if (id === undefined) return;
   try {
-    if (id === undefined) return;
-
     const body = { pin, id };
     await fetch(`${ip}${port}/rooms`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-  } catch (err) {
-    console.error("add room error", err.message);
+  } catch (error) {
+    console.error(error); //more compact try/catch syntax
   }
 };
 
-const addUser = async (roomPin, userSocket, host) => {
+const addUser = (roomPin, userSocket, host) => {
   try {
     const body = { roomPin, userSocket, host };
-    await fetch(`${ip}${port}/active_users`, {
+    fetch(`${ip}${port}/active_users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -102,13 +100,13 @@ const addUser = async (roomPin, userSocket, host) => {
 const addQuestion = (room, question, user) => {
   try {
     const body = { room, question, user };
-    const newQuestion = fetch(`${ip}${port}/questions`, {
+    fetch(`${ip}${port}/questions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+    }).then(() => {
+      getAllQuestions(room);
     });
-    const stringData = JSON.stringify(newQuestion);
-    return stringData;
   } catch (err) {
     console.error("add room error", err.message);
   }
@@ -117,8 +115,9 @@ const addQuestion = (room, question, user) => {
 // GET
 const getAllQuestions = (pin) => {
   try {
-    const params = { pin };
-    fetch(`${ip}${port}/questions/${pin}`);
+    fetch(`${ip}${port}/questions/${pin}`).then((questions) => {
+      console.log("log from get method calling the route: ", questions);
+    });
   } catch (err) {
     console.error(err.message);
   }
@@ -130,7 +129,7 @@ const getAllQuestions = (pin) => {
 app.post(`/rooms`, async (req, res) => {
   try {
     const { pin, id } = req.body;
-    const newSerial = await pool.query(
+    await pool.query(
       "INSERT INTO rooms (room_id, host_socket) VALUES($1, $2);",
       [pin, id]
     );
@@ -164,7 +163,7 @@ app.post("/questions", async (req, res) => {
       [room, question, user]
     );
     console.log("question submitted at: ", newQuestion.rows[0]["question"]);
-    res.json(newQuestion);
+    res.json(newQuestion.rows);
   } catch (err) {
     console.error(err.message);
   }
@@ -176,11 +175,16 @@ app.post("/questions", async (req, res) => {
 app.get("/questions/:pin", async (req, res) => {
   try {
     const { pin } = req.params;
-    const allQuestions = await pool.query(
-      "SELECT * from questions where question_room_pin = $1;",
-      [pin]
-    );
-    res.json(allQuestions);
+    pool
+      .query(
+        "SELECT * from questions where question_room_pin = $1 ORDER BY submit_time desc;",
+        [pin]
+      )
+      .then((questions) =>
+        io.to(`${pin}`).emit("update-questions", questions.rows)
+      );
+
+    // res.json(allQuestions.rows[0]);
   } catch (err) {
     console.error(err.message);
   }
