@@ -52,6 +52,9 @@ io.on("connection", (socket) => {
   socket.on("guest-join-session", (id, pin) => {
     //validate pin --start session
     console.log("recieved", id, pin);
+    socket.join(`${pin}`);
+
+    addUser(pin, id, false);
     io.send(`${id}`).emit("room-access", pin);
   });
 

@@ -41,7 +41,7 @@ const InputArea = styled.textarea`
   height: 4vh;
 `;
 
-export const Menu = ({ startRoom }) => {
+export const Menu = () => {
   const { userContext, setUserContext } = useContext(SessionState);
   const dummyConnect = "1234";
 
@@ -60,11 +60,21 @@ export const Menu = ({ startRoom }) => {
     console.log("connected from ", userContext["activeSocket"].id, possiblePin);
   };
 
+  const clickStartRoom = () => {
+    console.log(userContext["activeSocket"].id);
+
+    userContext["activeSocket"].emit(
+      "host-start-session",
+      userContext["activeSocket"].id
+    );
+    console.log("connected from ", userContext["activeSocket"].id);
+  };
+
   return (
     <GridDiv>
       <TopNav>Header</TopNav>
 
-      <HostButton onClick={startRoom}>
+      <HostButton onClick={clickStartRoom}>
         <h2>Host game</h2>
       </HostButton>
       <JoinButton>

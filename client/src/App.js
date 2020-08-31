@@ -8,7 +8,6 @@ import { ParticipantSession } from "./components/session/ParticipantSession";
 import { PostSession } from "./components/postSession/PostSession";
 import { SessionState } from "./contexts/SessionState";
 import { FlexDivY } from "./components/styledUI/Conatainers";
-import { ReloadComponent } from "./components/ReloadComponent";
 import { socket } from "./components/service/socket";
 
 // import {reload}
@@ -24,29 +23,12 @@ function App() {
     serial: null,
   });
 
-  socket.on("room-access", (pin) => {
-    console.log("room access received", pin);
-    const intPin = parseInt(pin);
-    setUserContext((prev) => {
-      return { ...prev, roomPin: intPin };
-    });
-    setUserContext((prev) => {
-      return { ...prev, appContext: 2 };
-    });
-  });
-
-  const clickStartRoom = useCallback(() => {
-    console.log(userContext["activeSocket"].id);
-
-    userContext["activeSocket"].emit(
-      "host-start-session",
-      userContext["activeSocket"].id
-    );
-    console.log("connected from ", userContext["activeSocket"].id);
-  });
+  useEffect(() => {
+    console.log("user context from reload comp: ", userContext["appContext"]);
+  }, [userContext["appContext"]]);
 
   useEffect(() => {
-    socket.on("room-pin", (pin) => {
+    userContext["activeSocket"].on("room-pin", (pin) => {
       console.log("pin recieved from server: ", pin);
       setUserContext((prev) => {
         return { ...prev, roomPin: pin, appContext: 1 };
@@ -54,9 +36,24 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    userContext["activeSocket"].on("room-access", (pin) => {
+      if (userContext["appContext"] === 0) {
+        console.log("room access received", pin);
+        const intPin = parseInt(pin);
+        setUserContext((prev) => {
+          return { ...prev, roomPin: intPin, appContext: 2 };
+        });
+      }
+    });
+  });
+
   return (
     <SessionState.Provider value={{ userContext, setUserContext }}>
-      <ReloadComponent startRoom={clickStartRoom} />
+      {userContext["appContext"] === 0 && <Menu />}
+      {userContext["appContext"] === 1 && <HostSession />}
+      {userContext["appContext"] === 2 && <ParticipantSession />}
+      {userContext["appContext"] === 3 && <PostSession />}
     </SessionState.Provider>
   );
 }
