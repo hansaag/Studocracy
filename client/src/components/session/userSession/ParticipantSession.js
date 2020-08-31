@@ -74,6 +74,10 @@ export const ParticipantSession = () => {
     });
   });
 
+  const upVoteQuestion = useCallback((question) => {
+    console.log("question UPVOTED: ", question);
+  });
+
   useEffect(() => {
     if (userContext["appContext"] === 2) {
       console.log("USER CONTEXT: ", userContext["appContext"]);
@@ -93,14 +97,14 @@ export const ParticipantSession = () => {
           <NewQuestionContext.Provider
             value={{ newQuestions, setNewQuestions }}
           >
-            <ChronologicalList />
+            <ChronologicalList upvote={upVoteQuestion} />
           </NewQuestionContext.Provider>
         </NewQuestionsDiv>
         <TopQuestionDiv>
           <TopQuestionContext.Provider
             value={{ topQuestions, setTopQuestions }}
           >
-            <TopList />
+            <TopList upvote={upVoteQuestion} />
           </TopQuestionContext.Provider>
         </TopQuestionDiv>
         <InputWrapper>

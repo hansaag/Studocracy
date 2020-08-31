@@ -23,13 +23,21 @@ const ListItem = styled.li`
   background-color: lightblue;
   border-radius: 20px;
   list-style: none;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const ListText = styled.p`
   margin-left: 10px;
 `;
 
-export const ChronologicalList = () => {
+const Upvote = styled.div`
+  width: 35px;
+  height: 100%;
+  background-color: green;
+`;
+
+export const ChronologicalList = ({ upvote }) => {
   const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
 
@@ -38,6 +46,7 @@ export const ChronologicalList = () => {
       return newQuestions.map((questionInfo, index) => (
         <ListItem key={index}>
           <ListText>{questionInfo.question}</ListText>
+          <Upvote>O</Upvote>
         </ListItem>
       ));
     });
