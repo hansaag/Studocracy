@@ -24,8 +24,12 @@ function App() {
     serial: null,
   });
 
-  socket.on("room-access", () => {
-    console.log("room access received");
+  socket.on("room-access", (pin) => {
+    console.log("room access received", pin);
+    const intPin = parseInt(pin);
+    setUserContext((prev) => {
+      return { ...prev, roomPin: intPin };
+    });
     setUserContext((prev) => {
       return { ...prev, appContext: 2 };
     });

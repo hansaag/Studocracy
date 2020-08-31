@@ -17,7 +17,7 @@ CREATE TABLE questions(
     question VARCHAR NOT NULL,
     upvotes INT default 0,
     user_asked varchar(25) references active_users(user_socket),
-    submit_time DATE DEFAULT CURRENT_DATE
+    submit_time DATE DEFAULT NOW()
 );
 -- SELECT TO_CHAR(NOW() :: DATE, 'dd/mm/yyyy');
 

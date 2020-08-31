@@ -60,10 +60,23 @@ export const ParticipantSession = () => {
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
   const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
-  // const registerQuestion = useCallback((question) => {
-  //   console.log("question submitted: ", question);
-  //   userContext["activeSocket"].emit("question-sent", question);
-  // });
+  const registerQuestion = useCallback((question) => {
+    console.log("question submitted: ", question);
+    console.log({
+      user: userContext["activeSocket"].id,
+      question: question,
+      room: userContext["roomPin"],
+    });
+    userContext["activeSocket"].emit("question-sent", {
+      user: userContext["activeSocket"].id,
+      question: question,
+      room: userContext["roomPin"],
+    });
+    userContext["activeSocket"].on("update-questions", (questions) => {
+      console.log(questions);
+      setNewQuestions(questions);
+    });
+  });
 
   return (
     <FlexDivY>
@@ -84,7 +97,7 @@ export const ParticipantSession = () => {
           </TopQuestionContext.Provider>
         </TopQuestionDiv>
         <InputWrapper>
-          <QuestionForm />
+          <QuestionForm submit={registerQuestion} />
         </InputWrapper>
       </GridDiv>
     </FlexDivY>

@@ -41,7 +41,6 @@ export const ChronologicalList = () => {
         </ListItem>
       ));
     });
-    console.log(newQuestions);
   }, [newQuestions]);
 
   return (

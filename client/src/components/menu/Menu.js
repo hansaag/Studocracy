@@ -23,11 +23,22 @@ const Header = styled(GridItem)`
 const JoinButton = styled(GridItem)`
   grid-column: 10/11;
   grid-row: 2;
+  background-color: lightblue;
 `;
 
 const HostButton = styled(GridItem)`
   grid-column: 2/3;
   grid-row: 2;
+`;
+
+const Footer = styled(FlexDivX)`
+  grid-column: 1/12;
+  grid-row: 6;
+`;
+
+const InputArea = styled.textarea`
+  width: 80%;
+  height: 4vh;
 `;
 
 export const Menu = ({ startRoom }) => {
@@ -40,26 +51,27 @@ export const Menu = ({ startRoom }) => {
   });
 
   const clickJoinRoom = () => {
-    if (userContext["activeSocket"] !== null) {
-      userContext["activeSocket"].emit(
-        "guest-join-session",
-        userContext["activeSocket"].id,
-        dummyConnect
-      );
-      console.log(
-        "connected from ",
-        userContext["activeSocket"].id,
-        dummyConnect
-      );
-    }
+    const possiblePin = document.getElementById("room-pin-input").value;
+    userContext["activeSocket"].emit(
+      "guest-join-session",
+      userContext["activeSocket"].id,
+      possiblePin
+    );
+    console.log("connected from ", userContext["activeSocket"].id, possiblePin);
   };
 
   return (
     <GridDiv>
       <TopNav>Header</TopNav>
 
-      <HostButton onClick={startRoom}>Host game</HostButton>
-      <JoinButton onClick={clickJoinRoom}>Join game</JoinButton>
+      <HostButton onClick={startRoom}>
+        <h2>Host game</h2>
+      </HostButton>
+      <JoinButton>
+        <InputArea placeholder="Add room pin" id="room-pin-input"></InputArea>
+        <h2 onClick={clickJoinRoom}>Join game</h2>
+      </JoinButton>
+      <Footer></Footer>
     </GridDiv>
   );
 };

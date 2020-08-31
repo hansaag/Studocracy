@@ -52,6 +52,7 @@ io.on("connection", (socket) => {
   socket.on("guest-join-session", (id, pin) => {
     //validate pin --start session
     console.log("recieved", id, pin);
+    io.send(`${id}`).emit("room-access", pin);
   });
 
   socket.on("question-sent", (data) => {
@@ -172,7 +173,7 @@ app.post("/questions", async (req, res) => {
 //GET
 
 //get all questions submitted in a specific room
-app.get("/questions/:pin", async (req, res) => {
+app.get("/questions/:pin", (req) => {
   try {
     const { pin } = req.params;
     pool
