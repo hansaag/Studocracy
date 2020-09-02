@@ -64,6 +64,11 @@ io.on("connection", (socket) => {
     console.log(data.user);
     addQuestion(data.room, data.question, data.user);
   });
+
+  socket.on("upvote-sent", (question) => {
+    console.log(question);
+    upvoteQuestion(question.question_room_pin, question.question_serial);
+  });
 });
 
 //SOCKET OUTPUT PROCEDURES
@@ -118,9 +123,24 @@ const addQuestion = (room, question, user) => {
 
 // GET
 const getAllQuestions = (pin) => {
+  console.log("get all questions method called");
   try {
     fetch(`${ip}${port}/questions/${pin}`).then((questions) => {
       console.log("log from get method calling the route: ", questions);
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+// PUT
+const upvoteQuestion = (pin, serial) => {
+  try {
+    fetch(`${ip}${port}/questions/${pin}/${serial}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    }).then(() => {
+      getAllQuestions(pin);
     });
   } catch (err) {
     console.error(err.message);
@@ -189,6 +209,23 @@ app.get("/questions/:pin", (req) => {
       );
 
     // res.json(allQuestions.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+// PUT
+app.put("/questions/:pin/:serial", async (req, res) => {
+  console.log("route to add upvote called");
+  try {
+    const { pin, serial } = req.params;
+    console.log(pin, serial);
+    const upvoted = await pool.query(
+      "UPDATE questions SET upvotes = upvotes + 1 WHERE question_room_pin = $1 and question_serial = $2;",
+      [pin, serial]
+    );
+    console.log(upvoted.rows);
+    res.json(upvoted.rows);
   } catch (err) {
     console.error(err.message);
   }

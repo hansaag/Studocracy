@@ -6,7 +6,7 @@ import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
   margin: 0 auto;
-
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -37,6 +37,15 @@ const Upvote = styled.div`
   background-color: green;
 `;
 
+const UpvoteCount = styled.div`
+  width: 35px;
+  height: 35px;
+
+  & p {
+    padding: 2px 2px 2px 2px;
+  }
+`;
+
 export const ChronologicalList = ({ upvote }) => {
   const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
@@ -46,7 +55,8 @@ export const ChronologicalList = ({ upvote }) => {
       return newQuestions.map((questionInfo, index) => (
         <ListItem key={index}>
           <ListText>{questionInfo.question}</ListText>
-          <Upvote>O</Upvote>
+          <UpvoteCount>{questionInfo.upvotes}</UpvoteCount>
+          <Upvote onClick={() => upvote(questionInfo)}>O</Upvote>
         </ListItem>
       ));
     });

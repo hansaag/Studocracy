@@ -20,17 +20,19 @@ import { NavBar } from "../../navigationBar/NavBar";
 
 const TopQuestionDiv = styled.div`
   grid-column: 1/5;
-  grid-row 2/4;
+  grid-row 1/5;
 `;
 
 const NewQuestionsDiv = styled.div`
   grid-column: 6/12;
-  grid-row 2/4;
+  grid-row 1/5;
 `;
 
 const InputWrapper = styled.div`
 grid-column: 1/12;
-grid-row 5/6;
+grid-row 6/7;
+margin-bottom: 10px;
+
 `;
 
 export const ParticipantSession = () => {
@@ -76,6 +78,7 @@ export const ParticipantSession = () => {
 
   const upVoteQuestion = useCallback((question) => {
     console.log("question UPVOTED: ", question);
+    userContext["activeSocket"].emit("upvote-sent", question);
   });
 
   useEffect(() => {

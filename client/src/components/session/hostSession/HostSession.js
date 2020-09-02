@@ -20,17 +20,19 @@ import { NavBar } from "../../navigationBar/NavBar";
 
 const TopQuestionDiv = styled.div`
   grid-column: 1/5;
-  grid-row 1/4;
+  grid-row 1/5;
 `;
 
 const NewQuestionsDiv = styled.div`
   grid-column: 6/12;
-  grid-row 1/4;
+  grid-row 1/5;
 `;
 
 const InputWrapper = styled.div`
 grid-column: 1/12;
-grid-row 5/6;
+grid-row 6/7;
+margin-bottom: 10px;
+
 `;
 
 export const HostSession = () => {

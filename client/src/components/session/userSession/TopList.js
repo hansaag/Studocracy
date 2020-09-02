@@ -41,7 +41,16 @@ const Upvote = styled.div`
   background-color: green;
 `;
 
-export const TopList = () => {
+const UpvoteCount = styled.div`
+  width: 35px;
+  height: 35px;
+
+  & p {
+    padding: 2px 2px 2px 2px;
+  }
+`;
+
+export const TopList = ({ upvote }) => {
   const { topQuestions, setTopQuestions } = useContext(TopQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
 
@@ -50,7 +59,8 @@ export const TopList = () => {
       return topQuestions.map((questionInfo, index) => (
         <ListItem key={index}>
           <ListText>{questionInfo.question}</ListText>
-          <Upvote>O</Upvote>
+          <UpvoteCount>{questionInfo.upvotes}</UpvoteCount>
+          <Upvote onClick={() => upvote(questionInfo)}>O</Upvote>
         </ListItem>
       ));
     });
