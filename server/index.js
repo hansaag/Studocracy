@@ -36,9 +36,6 @@ io.on("connection", (socket) => {
     console.log("guest disconnected");
   });
 
-  //socket.removeAllListeners(room + '-newMessage'); til en metode
-
-  //socket.off('MY_EVENT').on('MY_EVENT', () => doThisOnlyOnce());
   socket.on("host-start-session", () => {
     console.log("host starting session");
     //validate pin --start session (socket.data = data f.eks)
@@ -201,7 +198,7 @@ app.get("/questions/:pin", (req) => {
     const { pin } = req.params;
     pool
       .query(
-        "SELECT * from questions where question_room_pin = $1 ORDER BY submit_time desc;",
+        "SELECT * from questions where question_room_pin = $1 ORDER BY question_serial desc;",
         [pin]
       )
       .then((questions) =>
