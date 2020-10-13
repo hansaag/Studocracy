@@ -28,15 +28,15 @@ const SubmitButton = styled.div`
 
 const SendButton = styled.img``;
 
-export const QuestionForm = ({ submit }) => {
+export const QuestionForm = ({ startVote }) => {
   return (
     <Qform>
       <FormHeader>Still spørsmål</FormHeader>
       <InputContainer>
-        <InputArea id="input-question"></InputArea>
+        <InputArea id="vote-parameters"></InputArea>
         <SubmitButton
           onClick={() =>
-            submit(document.getElementById("input-question").value)
+            startVote(document.getElementById("vote-parameters").value)
           }
         >
           Submit

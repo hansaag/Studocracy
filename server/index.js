@@ -66,6 +66,13 @@ io.on("connection", (socket) => {
     console.log(question);
     upvoteQuestion(question.question_room_pin, question.question_serial);
   });
+  socket.on("upvote-sent", (question) => {
+    console.log(question);
+  });
+  socket.on("votinground-sent", (info) => {
+    console.log(info.question);
+    broadcastVotingRound(info);
+  });
 });
 
 //SOCKET OUTPUT PROCEDURES
@@ -116,6 +123,10 @@ const addQuestion = (room, question, user) => {
   } catch (err) {
     console.error("add room error", err.message);
   }
+};
+
+const broadcastVotingRound = (info) => {
+  io.to(`${info.room}`).emit("start-votinground", info.question);
 };
 
 // GET

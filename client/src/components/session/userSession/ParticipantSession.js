@@ -11,10 +11,10 @@ import {
 import { SessionState } from "../../../contexts/SessionState";
 import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
+import { NavBar } from "../../navigationBar/NavBar";
 import { ChronologicalList } from "./ChronologicalList";
 import { TopList } from "./TopList";
 import { QuestionForm } from "./QuestionForm";
-import { NavBar } from "../../navigationBar/NavBar";
 
 const TopQuestionDiv = styled.div`
   grid-column: 1/5;
@@ -110,11 +110,20 @@ export const ParticipantSession = () => {
     userContext["activeSocket"].emit("upvote-sent", question);
   });
 
+  const startVote = () => {
+    console.log("vote started");
+  };
+
   useEffect(() => {
     if (userContext["appContext"] === 2) {
       userContext["activeSocket"].on("update-questions", (questions) => {
         console.log("participant", questions);
         setNewQuestions(questions);
+      });
+
+      userContext["activeSocket"].on("start-votinground", (vote) => {
+        console.log("participant", vote);
+        startVote(vote);
       });
     }
   }, []);
