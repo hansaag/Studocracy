@@ -9,8 +9,6 @@ import {
 } from "../../styledUI/Conatainers";
 
 import { SessionState } from "../../../contexts/SessionState";
-
-import { TopQuestionContext } from "../../../contexts/TopQuestionContext";
 import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 import { ChronologicalList } from "./ChronologicalList";
@@ -98,15 +96,8 @@ export const ParticipantSession = () => {
   ];
   const { userContext, setUserContext } = useContext(SessionState);
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
-  const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
   const registerQuestion = useCallback((question) => {
-    console.log("question submitted: ", question);
-    console.log({
-      user: userContext["activeSocket"].id,
-      question: question,
-      room: userContext["roomPin"],
-    });
     userContext["activeSocket"].emit("question-sent", {
       user: userContext["activeSocket"].id,
       question: question,
@@ -121,8 +112,6 @@ export const ParticipantSession = () => {
 
   useEffect(() => {
     if (userContext["appContext"] === 2) {
-      console.log("USER CONTEXT: ", userContext["appContext"]);
-
       userContext["activeSocket"].on("update-questions", (questions) => {
         console.log("participant", questions);
         setNewQuestions(questions);
@@ -134,20 +123,14 @@ export const ParticipantSession = () => {
     <FlexDivY>
       <NavBar />
       <GridDiv>
-        <NewQuestionsDiv>
-          <NewQuestionContext.Provider
-            value={{ newQuestions, setNewQuestions }}
-          >
+        <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
+          <NewQuestionsDiv>
             <ChronologicalList upvote={upVoteQuestion} />
-          </NewQuestionContext.Provider>
-        </NewQuestionsDiv>
-        <TopQuestionDiv>
-          <TopQuestionContext.Provider
-            value={{ topQuestions, setTopQuestions }}
-          >
+          </NewQuestionsDiv>
+          <TopQuestionDiv>
             <TopList upvote={upVoteQuestion} />
-          </TopQuestionContext.Provider>
-        </TopQuestionDiv>
+          </TopQuestionDiv>
+        </NewQuestionContext.Provider>
         <InputWrapper>
           <QuestionForm submit={registerQuestion} />
         </InputWrapper>

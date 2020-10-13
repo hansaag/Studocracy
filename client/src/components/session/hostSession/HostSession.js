@@ -10,7 +10,6 @@ import {
 
 import { SessionState } from "../../../contexts/SessionState";
 
-import { TopQuestionContext } from "../../../contexts/TopQuestionContext";
 import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 import { ChronologicalList } from "./ChronologicalList";
@@ -66,39 +65,9 @@ export const HostSession = () => {
     { id: 12, question: "Jeg liker kebab?" },
     { id: 12, question: "Jeg liker kebab?" },
   ];
-  const TopQuestions = [
-    { id: 14, question: "Jeg liker polser?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-  ];
+
   const { userContext, setUserContext } = useContext(SessionState);
   const [newQuestions, setNewQuestions] = useState(NewQuestions);
-  const [topQuestions, setTopQuestions] = useState(TopQuestions);
 
   useEffect(() => {
     if (userContext["appContext"] === 1) {
@@ -114,20 +83,14 @@ export const HostSession = () => {
     <FlexDivY>
       <NavBar />
       <GridDiv>
-        <NewQuestionsDiv>
-          <NewQuestionContext.Provider
-            value={{ newQuestions, setNewQuestions }}
-          >
+        <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
+          <NewQuestionsDiv>
             <ChronologicalList />
-          </NewQuestionContext.Provider>
-        </NewQuestionsDiv>
-        <TopQuestionDiv>
-          <TopQuestionContext.Provider
-            value={{ topQuestions, setTopQuestions }}
-          >
+          </NewQuestionsDiv>
+          <TopQuestionDiv>
             <TopList />
-          </TopQuestionContext.Provider>
-        </TopQuestionDiv>
+          </TopQuestionDiv>
+        </NewQuestionContext.Provider>
         <InputWrapper>
           <QuestionForm />
         </InputWrapper>

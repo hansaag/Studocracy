@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import styled from "styled-components";
+import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
-import { TopQuestionContext } from "../../../contexts/TopQuestionContext";
 import { SessionState } from "../../../contexts/SessionState";
 
 const ListWrapper = styled.div`
@@ -52,12 +52,13 @@ const UpvoteCount = styled.div`
 `;
 
 export const TopList = ({ upvote }) => {
-  const { topQuestions, setTopQuestions } = useContext(TopQuestionContext);
+  const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
 
   useEffect(() => {
     setRenderedQuestions(() => {
-      return topQuestions.map((questionInfo, index) => (
+      let topRated = newQuestions.sort((a, b) => b["upvotes"] - a["upvotes"]);
+      return topRated.map((questionInfo, index) => (
         <ListItem key={index}>
           <ListText>{questionInfo.question}</ListText>
           <UpvoteCount>{questionInfo.upvotes}</UpvoteCount>
@@ -65,8 +66,7 @@ export const TopList = ({ upvote }) => {
         </ListItem>
       ));
     });
-    console.log(topQuestions);
-  }, [topQuestions]);
+  }, [newQuestions]);
 
   return (
     <ListWrapper>
