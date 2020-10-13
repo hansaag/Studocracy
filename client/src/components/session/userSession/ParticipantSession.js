@@ -125,6 +125,10 @@ export const ParticipantSession = () => {
         console.log("participant", vote);
         startVote(vote);
       });
+
+      userContext["activeSocket"].on("viewercount-change", (num) => {
+        console.log("participant", num);
+      });
     }
   }, []);
 

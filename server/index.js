@@ -53,6 +53,10 @@ io.on("connection", (socket) => {
 
     addUser(pin, id, false);
     io.send(`${id}`).emit("room-access", pin);
+    if (io.sockets.adapter.rooms[`${pin}`]) {
+      participants = io.sockets.adapter.rooms[`${pin}`].length;
+      io.send(`${pin}`).emit("viewercount-change", participants);
+    }
   });
 
   socket.on("question-sent", (data) => {
@@ -74,10 +78,6 @@ io.on("connection", (socket) => {
     broadcastVotingRound(info);
   });
 });
-
-//SOCKET OUTPUT PROCEDURES
-
-const emitPermissionGranted = (roomID) => {};
 
 //GENERAL PROCEDURES
 
