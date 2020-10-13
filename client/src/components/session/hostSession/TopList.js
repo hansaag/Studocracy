@@ -8,6 +8,7 @@ import { SessionState } from "../../../contexts/SessionState";
 const ListWrapper = styled.div`
   margin: 0 auto;
   display: flex;
+  max-height: 65vh;
   flex-direction: column;
   justify-content: flex-start;
   text-align: center;

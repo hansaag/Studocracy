@@ -25,11 +25,11 @@ const TopQuestionDiv = styled.div`
 
 const NewQuestionsDiv = styled.div`
   grid-column: 6/12;
-  grid-row 1/5;
+  grid-row 1/7;
 `;
 
 const InputWrapper = styled.div`
-grid-column: 1/12;
+grid-column: 1/5;
 grid-row 6/7;
 margin-bottom: 10px;
 
@@ -53,10 +53,48 @@ export const ParticipantSession = () => {
     { id: 12, question: "Jeg liker kebab?" },
     { id: 12, question: "Jeg liker kebab?" },
     { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
   ];
   const TopQuestions = [
-    { id: 15, question: "Jeg liker noobs?" },
-    { id: 2, question: "Jeg liker kalver?" },
+    { id: 14, question: "Jeg liker polser?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
+    { id: 12, question: "Jeg liker kebab?" },
   ];
   const { userContext, setUserContext } = useContext(SessionState);
   const [newQuestions, setNewQuestions] = useState(NewQuestions);

@@ -6,7 +6,7 @@ import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
   margin: 0 auto;
-  max-height: 100%;
+  max-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

@@ -20,12 +20,12 @@ export const FlexDivY = styled.div`
 export const GridDiv = styled.div`
   display: grid;
   grid-template-columns: 12, 1fr;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: 7, 1fr;
   grid-gap: 10px;
   height: 90vh;
   width: 98%;
-  margin: 0 1% 1% 1%;
-  overflow: hidden;
+  margin: 0 1% 30px 1%;
+  overflow: scroll;
 `;
 
 export const TopNav = styled.nav`
