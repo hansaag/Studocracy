@@ -17,7 +17,7 @@ const InputContainer = styled.div`
     flex-direction: row;
 `;
 const InputArea = styled.textarea`
-    width: 80%;
+    width: 30vh;
     height: 55px;
 `;
 

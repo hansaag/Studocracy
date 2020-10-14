@@ -19,10 +19,12 @@ const ListWrapper = styled.div`
 
 const List = styled.div`
     overflow-y: scroll;
+    width: 45vw;
 `;
 
 const ListItem = styled.li`
     margin: 15px;
+    width: 90%;
     text-align: left;
     background-color: lightblue;
     border-radius: 20px;
