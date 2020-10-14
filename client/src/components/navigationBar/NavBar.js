@@ -28,9 +28,19 @@ const ParticipantBox = styled.div`
 
 export const NavBar = () => {
   const { userContext, setUserContext } = useContext(SessionState);
+  const [numberOfParticipants, setNumberOfParticipants] = useState([]);
 
   useEffect(() => {}, [userContext["roomPin"]]);
-
+  useEffect(() => {
+    userContext["activeSocket"].on(
+      "viewercount-change",
+      (num) => {
+        console.log("participant", num);
+        setNumberOfParticipants(num);
+      },
+      []
+    );
+  });
   return (
     <TopNav>
       <NavContainer>
@@ -38,7 +48,9 @@ export const NavBar = () => {
         <SessionPinBox>
           Pin: <br /> {userContext["roomPin"]}
         </SessionPinBox>
-        <ParticipantBox>Nr of participants</ParticipantBox>
+        <ParticipantBox>
+          Nr of participants: <br /> {numberOfParticipants}
+        </ParticipantBox>
       </NavContainer>
     </TopNav>
   );

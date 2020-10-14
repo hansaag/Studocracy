@@ -34,39 +34,8 @@ margin-bottom: 10px;
 `;
 
 export const HostSession = () => {
-  const NewQuestions = [
-    { id: 14, question: "Jeg liker polser?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-  ];
-
   const { userContext, setUserContext } = useContext(SessionState);
-  const [newQuestions, setNewQuestions] = useState(NewQuestions);
+  const [newQuestions, setNewQuestions] = useState([]);
 
   const registerVote = useCallback((question) => {
     console.log("vote submitted");

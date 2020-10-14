@@ -17,7 +17,10 @@ import {
 const JoinButton = styled(GridItem)`
   grid-column: 10/11;
   grid-row: 2;
-  background-color: lightblue;
+  margins: 0;
+  & h2 {
+    margin-left: 25px;
+  }
 `;
 
 const HostButton = styled(GridItem)`

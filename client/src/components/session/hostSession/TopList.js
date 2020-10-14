@@ -27,10 +27,22 @@ const ListItem = styled.li`
   background-color: lightblue;
   border-radius: 20px;
   list-style: none;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const ListText = styled.p`
   margin-left: 10px;
+`;
+
+const Upvote = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: green;
+`;
+
+const UpvoteCount = styled.p`
+  margin-right: 15px;
 `;
 
 export const TopList = () => {
@@ -43,6 +55,7 @@ export const TopList = () => {
       return topRated.map((questionInfo, index) => (
         <ListItem key={index}>
           <ListText>{questionInfo.question}</ListText>
+          <UpvoteCount>{questionInfo.upvotes}</UpvoteCount>
         </ListItem>
       ));
     });

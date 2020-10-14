@@ -37,14 +37,7 @@ const Upvote = styled.div`
   background-color: green;
 `;
 
-const UpvoteCount = styled.div`
-  width: 35px;
-  height: 35px;
-
-  & p {
-    padding: 2px 2px 2px 2px;
-  }
-`;
+const UpvoteCount = styled.p``;
 
 export const ChronologicalList = ({ upvote }) => {
   const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);

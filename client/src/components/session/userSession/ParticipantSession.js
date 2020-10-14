@@ -34,68 +34,8 @@ margin-bottom: 10px;
 `;
 
 export const ParticipantSession = () => {
-  const NewQuestions = [
-    { id: 14, question: "Jeg liker polser?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-  ];
-  const TopQuestions = [
-    { id: 14, question: "Jeg liker polser?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-    { id: 12, question: "Jeg liker kebab?" },
-  ];
   const { userContext, setUserContext } = useContext(SessionState);
-  const [newQuestions, setNewQuestions] = useState(NewQuestions);
+  const [newQuestions, setNewQuestions] = useState([]);
 
   const registerQuestion = useCallback((question) => {
     userContext["activeSocket"].emit("question-sent", {
@@ -124,10 +64,6 @@ export const ParticipantSession = () => {
       userContext["activeSocket"].on("start-votinground", (vote) => {
         console.log("participant", vote);
         startVote(vote);
-      });
-
-      userContext["activeSocket"].on("viewercount-change", (num) => {
-        console.log("participant", num);
       });
     }
   }, []);

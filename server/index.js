@@ -28,12 +28,10 @@ const ip = "http://localhost:";
 io.on("connection", (socket) => {
   console.log("user joined", socket.id);
 
-  socket.on("host-disconnect", () => {
+  socket.on("disconnect", () => {
     console.log("host disconnected");
-  });
-
-  socket.on("guest-disconnect", () => {
-    console.log("guest disconnected");
+    // logic to emit reduced number of participants
+    //logic to test for host or participant etc.
   });
 
   socket.on("host-start-session", () => {
@@ -53,10 +51,9 @@ io.on("connection", (socket) => {
 
     addUser(pin, id, false);
     io.send(`${id}`).emit("room-access", pin);
-    if (io.sockets.adapter.rooms[`${pin}`]) {
-      participants = io.sockets.adapter.rooms[`${pin}`].length;
-      io.send(`${pin}`).emit("viewercount-change", participants);
-    }
+    getAllQuestions(pin);
+    participants = io.sockets.adapter.rooms[`${pin}`].length - 1;
+    io.send(`${pin}`).emit("viewercount-change", participants);
   });
 
   socket.on("question-sent", (data) => {
@@ -70,16 +67,14 @@ io.on("connection", (socket) => {
     console.log(question);
     upvoteQuestion(question.question_room_pin, question.question_serial);
   });
-  socket.on("upvote-sent", (question) => {
-    console.log(question);
-  });
+
   socket.on("votinground-sent", (info) => {
     console.log(info.question);
     broadcastVotingRound(info);
   });
 });
 
-//GENERAL PROCEDURES
+//Add players that request a room if they are registered as new sockets after server crash
 
 //POST
 
