@@ -15,3 +15,8 @@ passed to participants entering and can start the participants timer based on th
 ## Allow participants to keep answering and upvoting after the lecture
 
 Would be a clean way to keep general teacher student qeueries in one place
+
+## Generate proper format for the question rounds
+
+Have a static icon to add alternative, and display the added ones vertically next to
+the input form.
