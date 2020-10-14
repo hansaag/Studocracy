@@ -22,18 +22,19 @@ export const FlexDivY = styled.div`
 
 export const GridDiv = styled.div`
     display: grid;
-    grid-template-columns: 12, 1fr;
-    grid-auto-rows: auto 120px;
+
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: minmax(auto, 70vh) 110px;
     grid-gap: 10px;
     height: 90vh;
     width: 98%;
-    margin: 0 1% 10px 1%;
+    margin: 0 1% 0 1%;
     overflow: scroll;
 `;
 
 export const TopNav = styled.nav`
-    grid-column: 1/12;
-    grid-row: 1;
+    display: flex;
+    justify-content: space-between;
     background-color: lightblue;
 
     height: 10vh;
@@ -41,12 +42,12 @@ export const TopNav = styled.nav`
 `;
 
 export const NavContainer = styled.div`
-    display: grid;
-    grid-template-columns: 12, 1fr;
-    grid-gap: 10px;
-    grid-auto-rows: minmax(70px, auto);
-    margin: 1vh 1vw 1vh 1vw;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-top: 1vh;
     overflow: hidden;
+    width: 90%;
 `;
 
 export const GridItem = styled.div``;

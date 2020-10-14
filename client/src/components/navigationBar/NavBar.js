@@ -11,20 +11,11 @@ import {
 
 import { SessionState } from "../../contexts/SessionState";
 
-const TimerBox = styled.div`
-    grid-column: 1/2;
-    grid-row: 1;
-`;
+const TimerBox = styled.div``;
 
-const SessionPinBox = styled.div`
-    grid-column: 5/6;
-    grid-row: 1;
-`;
+const SessionPinBox = styled.div``;
 
-const ParticipantBox = styled.div`
-    grid-column: 10/11;
-    grid-row: 1;
-`;
+const ParticipantBox = styled.div``;
 
 export const NavBar = () => {
     const { userContext, setUserContext } = useContext(SessionState);

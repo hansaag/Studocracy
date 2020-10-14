@@ -9,7 +9,7 @@ const ListWrapper = styled.div`
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    max-height: 65vh;
+    max-height: 70vh;
     justify-content: flex-start;
     text-align: center;
 

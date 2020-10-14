@@ -6,9 +6,9 @@ import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
     margin: 0 auto;
-    max-height: 85vh;
     display: flex;
     flex-direction: column;
+    max-height: 85vh;
     justify-content: flex-start;
     text-align: center;
 `;
@@ -21,7 +21,6 @@ const List = styled.div`
 const ListItem = styled.li`
     margin: 15px;
     width: 90%;
-
     text-align: left;
     background-color: lightblue;
     border-radius: 20px;

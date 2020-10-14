@@ -17,19 +17,19 @@ import { TopList } from "./TopList";
 import { QuestionForm } from "./QuestionForm";
 
 const TopQuestionDiv = styled.div`
-    grid-column: 1/5;
+    grid-column: 1;
     grid-row: 1;
 `;
 
 const NewQuestionsDiv = styled.div`
-    grid-column: 6/12;
+    grid-column: 2;
     grid-row: 1/2;
 `;
 
 const InputWrapper = styled.div`
-    grid-column: 1/5;
+    grid-column: 1;
     grid-row: 2;
-    margin-bottom: 10px;
+    margin: 0 0 15px 10px;
 `;
 
 export const HostSession = () => {
