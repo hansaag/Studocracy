@@ -2,7 +2,7 @@ CREATE TABLE rooms(
     room_id INT PRIMARY KEY,
     active boolean NOT NULL default true,
     initiated DATE default CURRENT_DATE,
-    host_socket varchar(25);
+    host_socket varchar(25)
 );
 
 CREATE TABLE active_users(
@@ -22,4 +22,4 @@ CREATE TABLE questions(
 -- SELECT TO_CHAR(NOW() :: DATE, 'dd/mm/yyyy');
 
 
-ALTER SEQUENCE rooms_serial_nr_seq RESTART WITH 1;
+ALTER SEQUENCE question_serial RESTART WITH 1;

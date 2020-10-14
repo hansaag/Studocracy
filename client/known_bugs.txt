@@ -1,16 +1,22 @@
 D: description - R: rate of occurence - S: severity - F: possible fix
 
 
-1)
+1) RESOLVED - WSL specific
 D: PSQL not returning correct time on queueries
 R: always
 S: severe
 F: Most likely a problem caused by WSL, making PSQL unable to get the correct system time. Worked
 on a cloud server when the same issue arose on last project.
 
-2)
+2) RESOLVED - use effect structure and checks for inactive components
 D: Duplicate event handler calls occuring in frontend when eventhandlers are defined outside
 a function or useEffect scope.
 R: always, but fixed in a hacky manner. Will most likely return.
 S: Potential to be severe when accounting for operations of some scale.
 F: No easy fix. Most likely a lack of understanding. Root cause should be addressed!
+
+3) 
+D: disconnecting users cause unhandled promise rejections when DB calls are made.
+R: always
+S: No user impact during low scale usage, but I estimate negative effects at scale.
+F: Include more catch blocks with proper logic.
