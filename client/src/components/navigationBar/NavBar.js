@@ -1,47 +1,48 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import {
-  FlexDivX,
-  FlexDivY,
-  GridDiv,
-  GridItem,
-  TopNav,
-  NavContainer,
+    FlexDivX,
+    FlexDivY,
+    GridDiv,
+    GridItem,
+    TopNav,
+    NavContainer,
 } from "../styledUI/Conatainers";
 
-import { SocketInfo } from "../../contexts/SocketInfo";
-import { RoomPinContext } from "../../contexts/RoomPinContext";
+import { SessionState } from "../../contexts/SessionState";
 
-const TimerBox = styled.div`
-  grid-column: 1/2;
-  grid-row: 1;
-`;
+const TimerBox = styled.div``;
 
-const SessionPinBox = styled.div`
-  grid-column: 5/6;
-  grid-row: 1;
-`;
+const SessionPinBox = styled.div``;
 
-const ParticipantBox = styled.div`
-  grid-column: 10/11;
-  grid-row: 1;
-`;
+const ParticipantBox = styled.div``;
 
 export const NavBar = () => {
-  const { activeSocket, setActiveSocket } = useContext(SocketInfo);
-  const { roomPin, setRoomPin } = useContext(RoomPinContext);
+    const { userContext, setUserContext } = useContext(SessionState);
+    const [numberOfParticipants, setNumberOfParticipants] = useState(0);
 
-  useEffect(() => {}, [roomPin]);
-
-  return (
-    <TopNav>
-      <NavContainer>
-        <TimerBox>Time</TimerBox>
-        <SessionPinBox>
-          Pin: <br /> {activeSocket.roomPin}
-        </SessionPinBox>
-        <ParticipantBox>Nr of participants</ParticipantBox>
-      </NavContainer>
-    </TopNav>
-  );
+    useEffect(() => {}, [userContext["roomPin"]]);
+    useEffect(() => {
+        userContext["activeSocket"].on(
+            "viewercount-change",
+            (num) => {
+                console.log("participant", num);
+                setNumberOfParticipants(num);
+            },
+            []
+        );
+    });
+    return (
+        <TopNav>
+            <NavContainer>
+                <TimerBox>Time</TimerBox>
+                <SessionPinBox>
+                    Pin: <br /> {userContext["roomPin"]}
+                </SessionPinBox>
+                <ParticipantBox>
+                    Nr of participants: <br /> {numberOfParticipants}
+                </ParticipantBox>
+            </NavContainer>
+        </TopNav>
+    );
 };
