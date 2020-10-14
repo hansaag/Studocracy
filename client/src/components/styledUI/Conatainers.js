@@ -23,11 +23,11 @@ export const FlexDivY = styled.div`
 export const GridDiv = styled.div`
     display: grid;
     grid-template-columns: 12, 1fr;
-    grid-auto-rows: 7, 1fr;
+    grid-auto-rows: auto 120px;
     grid-gap: 10px;
     height: 90vh;
     width: 98%;
-    margin: 0 1% 30px 1%;
+    margin: 0 1% 10px 1%;
     overflow: scroll;
 `;
 

@@ -8,16 +8,17 @@ const Qform = styled.form`
     flex-direction: column;
 `;
 
-const FormHeader = styled.h2``;
+const FormHeader = styled.h2`
+    margin: 5px 0 10px 15px;
+`;
 
 const InputContainer = styled.div`
     display: flex;
     flex-direction: row;
-    width: 100%;
 `;
 const InputArea = styled.textarea`
     width: 80%;
-    height: 10vh;
+    height: 55px;
 `;
 
 const SubmitButton = styled.div`
@@ -33,7 +34,10 @@ export const QuestionForm = ({ startVote }) => {
         <Qform>
             <FormHeader>Start voting round</FormHeader>
             <InputContainer>
-                <InputArea id="vote-parameters"></InputArea>
+                <InputArea
+                    id="vote-parameters"
+                    placeholder="Choose case to vote for and add options to the right"
+                ></InputArea>
                 <SubmitButton
                     onClick={() =>
                         startVote(
