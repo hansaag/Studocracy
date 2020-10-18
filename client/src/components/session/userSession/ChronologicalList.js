@@ -31,36 +31,54 @@ const ListText = styled.p`
   margin-left: 10px;
 `;
 
+const UpvoteContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const Upvote = styled.button`
   background: none;
   border: none;
   font-size: 30px;
-  color: #95a5a6;
+  color: ${(props) => (props.highlighted ? "#d35400" : "#95a5a6")};
   outline: none;
 `;
 
-const UpvoteCount = styled.p``;
+const UpvoteCount = styled.h4`
+  margin-right: 5px;
+`;
 
 /** 
 * The list of questions provded by participants in chronological order. The list is 
 rerendered every time the server proved updates.
 */
 
-export const ChronologicalList = ({ upvote }) => {
+export const ChronologicalList = ({ upvote, upvotedQuestions }) => {
   const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
 
   useEffect(() => {
     setRenderedQuestions(() => {
-      return newQuestions.map((questionInfo, index) => 
-        <ListItem key={index}>
-          <ListText>{questionInfo.question}</ListText>
-          <UpvoteCount>{questionInfo.upvotes}</UpvoteCount>
-          <Upvote onClick={() => upvote(questionInfo)}>
-            <i className="fas fa-long-arrow-alt-up" id="upvote"></i>
-          </Upvote>
-        </ListItem>
-      ));
+      return newQuestions.map((questionInfo, index) => {
+        let highlighted = false;
+        if (upvotedQuestions.upvoteIDs.includes(questionInfo.question_serial)) {
+          highlighted = true;
+        }
+        return (
+          <ListItem key={index}>
+            <ListText>{questionInfo.question}</ListText>
+            <UpvoteContainer>
+              <UpvoteCount>{questionInfo.upvotes}</UpvoteCount>
+              <Upvote
+                onClick={() => upvote(questionInfo)}
+                highlighted={highlighted}
+              >
+                <i className="fas fa-long-arrow-alt-up" id="upvote"></i>
+              </Upvote>
+            </UpvoteContainer>
+          </ListItem>
+        );
+      });
     });
   }, [newQuestions]);
 

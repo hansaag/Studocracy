@@ -114,10 +114,16 @@ export const ParticipantSession = () => {
       <GridDiv>
         <NewQuestionContext.Provider value={{ newQuestions, setNewQuestions }}>
           <NewQuestionsDiv>
-            <ChronologicalList upvote={upVoteQuestion} />
+            <ChronologicalList
+              upvote={upVoteQuestion}
+              upvotedQuestions={upvotedQuestions}
+            />
           </NewQuestionsDiv>
           <TopQuestionDiv>
-            <TopList upvote={upVoteQuestion} />
+            <TopList
+              upvote={upVoteQuestion}
+              upvotedQuestions={upvotedQuestions}
+            />
           </TopQuestionDiv>
         </NewQuestionContext.Provider>
         <InputWrapper>
