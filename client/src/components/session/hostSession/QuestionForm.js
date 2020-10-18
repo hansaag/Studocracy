@@ -4,7 +4,7 @@ import styled from "styled-components";
 import send from "../../../images/send.png";
 
 const Qform = styled.form`
-  margin-left: 2vw;
+  margin: 0 0 3vh 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -25,9 +25,12 @@ const InputArea = styled.textarea`
 `;
 
 const SubmitButton = styled.div`
-  height: 10vh;
-  width: 20%;
+  height: 98%;
+  width: 55px;
   text-align: center;
+  background-color: lightblue;
+  font-size: 2em;
+  border: 1px solid black;
 `;
 
 const SendButton = styled.img``;
@@ -50,7 +53,7 @@ export const QuestionForm = ({ startVote }) => {
             startVote(document.getElementById("vote-parameters").value)
           }
         >
-          Submit
+          +
         </SubmitButton>
       </InputContainer>
     </Qform>
