@@ -12,32 +12,19 @@ app.use(express.json());
 const port = 6800;
 const ip = "http://localhost:";
 
-/* CLIENT SIDE PROCEDURES (ABSTRACT)
-
-1) connect
-2) host disconnect
-3) guest disconnect
-4) host started session 
-5) guest join session 
-6) comment submit
-7) upvote 
-*/
-
-//SOCKET INPUT PROCEDURES
+//SOCKET EVENTS
 
 io.on("connection", (socket) => {
   console.log("user joined", socket.id);
 
   socket.on("disconnect", () => {
     console.log("host disconnected");
-    // logic to emit reduced number of participants
-    //logic to test for host or participant etc.
+    //logic handle failed DB calls
   });
 
   socket.on("host-start-session", () => {
-    console.log("host starting session");
-    //validate pin --start session (socket.data = data f.eks)
     const pin = Math.floor(Math.random() * 90000) + 10000;
+    //needs to check DB for existing value
 
     socket.join(`${pin}`);
     io.to(`${socket.id}`).emit("room-pin", `${pin}`);
@@ -64,17 +51,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("upvote-sent", (question) => {
-    console.log(question);
     upvoteQuestion(question.question_room_pin, question.question_serial);
   });
 
   socket.on("votinground-sent", (info) => {
     console.log(info.question);
-    broadcastVotingRound(info);
+    io.to(`${info.room}`).emit("start-votinground", info.question);
   });
 });
-
-//Add players that request a room if they are registered as new sockets after server crash
 
 //POST
 
@@ -119,10 +103,6 @@ const addQuestion = (room, question, user) => {
   } catch (err) {
     console.error("add room error", err.message);
   }
-};
-
-const broadcastVotingRound = (info) => {
-  io.to(`${info.room}`).emit("start-votinground", info.question);
 };
 
 // GET
@@ -171,7 +151,7 @@ app.post(`/rooms`, async (req, res) => {
 app.post(`/active_users`, async (req, res) => {
   try {
     const { roomPin, userSocket, host } = req.body;
-    const newUser = await pool.query(
+    await pool.query(
       "INSERT INTO active_users (user_room_pin, user_socket, host) VALUES($1, $2, $3);",
       [roomPin, userSocket, host]
     );
