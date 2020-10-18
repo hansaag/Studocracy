@@ -16,3 +16,6 @@ body,
 code {
   overflow: hidden;
 }
+::-webkit-scrollbar {
+  display: none;
+}

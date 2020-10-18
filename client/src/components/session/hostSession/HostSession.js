@@ -17,7 +17,7 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export const GridDiv = styled.div`
+const GridDiv = styled.div`
   display: grid;
 
   grid-template-columns: repeat(2, 1fr);
