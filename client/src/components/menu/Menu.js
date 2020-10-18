@@ -40,9 +40,9 @@ const HostButton = styled.div`
   border-radius: 20px;
   width: 25vw;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   text-align: center;
-  line-height: 40px;
 `;
 
 const InputArea = styled.textarea`
@@ -111,10 +111,7 @@ export const Menu = () => {
       <Heading>Studocracy</Heading>
       <HorizontalContainer>
         <HostButton onClick={clickStartRoom}>
-          <h2>
-            Host <br />
-            lecture
-          </h2>
+          <h2>Host lecture</h2>
         </HostButton>
         <JoinButton>
           <InputArea placeholder="Add room pin" id="room-pin-input"></InputArea>
