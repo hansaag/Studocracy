@@ -12,8 +12,9 @@ const ListWrapper = styled.div`
 `;
 
 const List = styled.div`
+  margin: 0 auto;
   overflow-y: scroll;
-  width: 45vw;
+  width: 40vw;
 `;
 
 const ListItem = styled.li`

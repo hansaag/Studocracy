@@ -4,8 +4,11 @@ import styled from "styled-components";
 import send from "../../../images/send.png";
 
 const Qform = styled.form`
+  margin-left: 2vw;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  height: 20vh;
 `;
 
 const FormHeader = styled.h2`

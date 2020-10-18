@@ -3,21 +3,17 @@ import styled from "styled-components";
 import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   max-height: 70vh;
   justify-content: flex-start;
   text-align: center;
-
-  & h2 {
-    color: ;
-  }
 `;
 
 const List = styled.div`
+  margin: 0 auto;
   overflow-y: scroll;
-  width: 45vw;
+  width: 40vw;
 `;
 
 const ListItem = styled.li`
@@ -64,7 +60,7 @@ export const TopList = ({ upvote, upvotedQuestions }) => {
   useEffect(() => {
     setRenderedQuestions(() => {
       let topRated = newQuestions.sort((a, b) => b["upvotes"] - a["upvotes"]);
-      return topRated.map((questionInfo, index) => {
+      return topRated.slice(0, 5).map((questionInfo, index) => {
         let highlighted = false;
         if (upvotedQuestions.upvoteIDs.includes(questionInfo.question_serial)) {
           highlighted = true;

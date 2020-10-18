@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
-  margin: 0 auto;
   display: flex;
   max-height: 85vh;
   flex-direction: column;
@@ -12,8 +11,9 @@ const ListWrapper = styled.div`
 `;
 
 const List = styled.div`
+  margin: 0 auto;
   overflow-y: scroll;
-  width: 45vw;
+  width: 40vw;
 `;
 
 const ListItem = styled.li`

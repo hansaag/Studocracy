@@ -1,5 +1,7 @@
 # studocracy.com
 
+## Purpose
+
 This project aims to provide a simple but smart way for lecturers to keep track of
 the topics students are struggling to understand. This is acheived by starting a session
 and sharing the pin code with participants in the lecture. Students can then ask questions and
@@ -14,6 +16,14 @@ participant recieves x amount of upvotes for the question.
 
 The host view will also be modified to show better data, as there is no incentive for a lecturer
 to receive a continuous stream of questions, but rather the ones that have gone through the filter.
+
+I also plan to implement to possibility for users to supplement existing questions.
+
+## Implementation
+
+In it's current incarnation, the program relies heavily on database operations. All users, rooms and comments
+are stored and retrieved from the database when needed. This seems to be very efficient at the current scale, but
+will require solid cleanup implementation to work at large scale.
 
 ## License
 

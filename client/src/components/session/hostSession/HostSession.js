@@ -21,9 +21,10 @@ const GridDiv = styled.div`
   display: grid;
 
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: minmax(auto, 70vh) 110px;
+  grid-template-rows: 70vh 20vh;
+
   grid-gap: 10px;
-  height: 90vh;
+  min-height: 90vh;
   width: 98%;
   margin: 0 1% 0 1%;
   overflow: scroll;

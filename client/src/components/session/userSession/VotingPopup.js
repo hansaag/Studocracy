@@ -9,7 +9,7 @@ const VoteModal = styled.modal``;
 
 /**
  * This component will act as a popup to show voting rounds initiated by the host, and allow
- * the user to choose from a set of options.
+ * the user to choose from a set of options No implementation yet, but correctly recieves the data from server.
  */
 
 export const VotingPopup = () => {
