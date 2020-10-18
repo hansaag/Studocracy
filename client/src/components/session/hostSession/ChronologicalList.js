@@ -31,9 +31,10 @@ const ListText = styled.p`
   margin-left: 10px;
 `;
 
-const UpvoteCount = styled.p`
+const UpvoteCount = styled.h4`
   margin-right: 15px;
 `;
+
 /** 
 * The list of questions provded by participants in chronological order. The list is 
 rerendered every time the server proved updates.

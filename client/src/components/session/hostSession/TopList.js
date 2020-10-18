@@ -35,7 +35,7 @@ const ListText = styled.p`
   margin-left: 10px;
 `;
 
-const UpvoteCount = styled.p`
+const UpvoteCount = styled.h4`
   margin-right: 15px;
 `;
 

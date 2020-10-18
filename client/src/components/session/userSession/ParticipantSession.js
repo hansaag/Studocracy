@@ -55,6 +55,9 @@ const InputWrapper = styled.div`
 export const ParticipantSession = () => {
   const { userContext, setUserContext } = useContext(SessionState);
   const [newQuestions, setNewQuestions] = useState([]);
+  const [upvotedQuestions, setUpvotedQuestions] = useState({
+    upvoteIDs: [],
+  });
 
   const registerQuestion = useCallback((question) => {
     /**
@@ -74,9 +77,17 @@ export const ParticipantSession = () => {
   const upVoteQuestion = useCallback((question) => {
     /**
      * A callback function that lets the user upvote a question from on of the lists.
+     * @summary The function checks if the ID is already upvoted from this client using the state array,
+     * and if not, sends the upvote event to the server and adds the question ID to the state array.
      * @param {question object} question - The upvoted question sent to server for processing
      */
-
+    let upvoteID = question.question_serial;
+    if (upvotedQuestions.upvoteIDs.includes(upvoteID)) {
+      return null;
+    }
+    setUpvotedQuestions((prev) => {
+      return { upvoteIDs: [...prev.upvoteIDs, upvoteID] };
+    });
     userContext["activeSocket"].emit("upvote-sent", question);
   });
 
