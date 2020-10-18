@@ -27,7 +27,9 @@ const SessionPinBox = styled.div``;
 const ParticipantBox = styled.div``;
 
 /**
- * To
+ * Top navigation/information bar that currently shows the room pin and number of participants.
+ * Use effects are bound to server responses on pin and participation changes.
+ * Will include links to some different services in the future.
  */
 
 export const NavBar = () => {
@@ -35,16 +37,17 @@ export const NavBar = () => {
   const [numberOfParticipants, setNumberOfParticipants] = useState(0);
 
   useEffect(() => {}, [userContext["roomPin"]]);
+
   useEffect(() => {
     userContext["activeSocket"].on(
       "viewercount-change",
       (num) => {
-        console.log("participant", num);
         setNumberOfParticipants(num);
       },
       []
     );
   });
+
   return (
     <TopNav>
       <NavContainer>
