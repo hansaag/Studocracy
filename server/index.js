@@ -32,7 +32,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("guest-join-session", (id, pin) => {
-    //validate pin --start session
     console.log("recieved", id, pin);
     socket.join(`${pin}`);
 
@@ -44,8 +43,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("question-sent", (data) => {
-    //submit comment -- later add a time check since last
-    //comment as well as high upvotes -> extra rights
     console.log(data.user);
     addQuestion(data.room, data.question, data.user);
   });
@@ -60,7 +57,11 @@ io.on("connection", (socket) => {
   });
 });
 
-//POST
+/*
+The following procedues send qeueries to the DB  
+*/
+
+//adds a new room to the DB using the generated pin as the room ID
 
 const addRoom = async (id, pin) => {
   if (id === undefined) return;
@@ -76,6 +77,8 @@ const addRoom = async (id, pin) => {
   }
 };
 
+//adds a new user to the DB using the socket ID as identifier
+
 const addUser = (roomPin, userSocket, host) => {
   try {
     const body = { roomPin, userSocket, host };
@@ -88,6 +91,8 @@ const addUser = (roomPin, userSocket, host) => {
     console.error(err.message);
   }
 };
+
+//adds a new question to the DB with the corresponding room and user ID
 
 const addQuestion = (room, question, user) => {
   console.log("adding question");
@@ -105,7 +110,8 @@ const addQuestion = (room, question, user) => {
   }
 };
 
-// GET
+//requests all questions registered to a room with the given pin
+
 const getAllQuestions = (pin) => {
   console.log("get all questions method called");
   try {
@@ -117,7 +123,8 @@ const getAllQuestions = (pin) => {
   }
 };
 
-// PUT
+//updates a question in the DB by incrementing the vote count
+
 const upvoteQuestion = (pin, serial) => {
   try {
     fetch(`${ip}${port}/questions/${pin}/${serial}`, {
@@ -131,9 +138,10 @@ const upvoteQuestion = (pin, serial) => {
   }
 };
 
-/* The following procedures are routes to the DB with accompanying actions  */
+/* 
+The following procedures respond to the qeuery methods above  
+*/
 
-//POST
 app.post(`/rooms`, async (req, res) => {
   try {
     const { pin, id } = req.body;
@@ -148,6 +156,8 @@ app.post(`/rooms`, async (req, res) => {
   }
 });
 
+//adds a new user to DB with accompanying room ID
+
 app.post(`/active_users`, async (req, res) => {
   try {
     const { roomPin, userSocket, host } = req.body;
@@ -161,7 +171,7 @@ app.post(`/active_users`, async (req, res) => {
   }
 });
 
-// returnere hvert spørsmål direkte tilbake til klientene i rommet, eller returnere den oppdaterte listen? Samme gjelder upvotes
+//post a question to the correspinding room in the DB
 
 app.post("/questions", async (req, res) => {
   try {
@@ -177,9 +187,8 @@ app.post("/questions", async (req, res) => {
   }
 });
 
-//GET
-
 //get all questions submitted in a specific room
+
 app.get("/questions/:pin", (req) => {
   try {
     const { pin } = req.params;
@@ -191,16 +200,14 @@ app.get("/questions/:pin", (req) => {
       .then((questions) =>
         io.to(`${pin}`).emit("update-questions", questions.rows)
       );
-
-    // res.json(allQuestions.rows[0]);
   } catch (err) {
     console.error(err.message);
   }
 });
 
-// PUT
+//Registers an upvote to a question in the DB
+
 app.put("/questions/:pin/:serial", async (req, res) => {
-  console.log("route to add upvote called");
   try {
     const { pin, serial } = req.params;
     console.log(pin, serial);
