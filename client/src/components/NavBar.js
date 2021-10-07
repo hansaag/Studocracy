@@ -1,14 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { SessionState } from "../../contexts/SessionState";
+import { SessionState } from "../contexts/SessionState";
 
-const TopNav = styled.nav`
+const TopNav = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: lightblue;
-
   height: 10vh;
   width: 100%;
+
+  & span {
+    font-weight: 700;
+  }
 `;
 
 const NavContainer = styled.div`
@@ -53,12 +56,12 @@ export const NavBar = () => {
   return (
     <TopNav>
       <NavContainer>
-        <TimerBox>Time</TimerBox>
+        <TimerBox><span>Time:</span></TimerBox>
         <SessionPinBox>
-          Pin: <br /> {userContext["roomPin"]}
+          <span>Pin:</span> <br /> {userContext["roomPin"]}
         </SessionPinBox>
         <ParticipantBox>
-          Nr of participants: <br /> {numberOfParticipants}
+        <span>Nr of participants:</span> <br /> {numberOfParticipants}
         </ParticipantBox>
       </NavContainer>
     </TopNav>

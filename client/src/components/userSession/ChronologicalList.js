@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
+import { NewQuestionContext } from "../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
   display: flex;
@@ -33,9 +33,9 @@ const ListText = styled.p`
 `;
 
 const UpvoteContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `;
 
 const Upvote = styled.button`
@@ -56,18 +56,17 @@ const UpvoteWrapper = styled.div`
 `;
 
 /** 
-* The list of questions provded by participants in top-rated order. The list is 
-rerendered on changes to the new question list and returns the top 5 upvoted questions.
+* The list of questions provded by participants in chronological order. The list is 
+rerendered every time the server provides updates.
 */
 
-export const TopList = ({ upvote, upvotedQuestions }) => {
+export const ChronologicalList = ({ upvote, upvotedQuestions }) => {
   const { newQuestions } = useContext(NewQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
 
   useEffect(() => {
     setRenderedQuestions(() => {
-      let topRated = newQuestions.sort((a, b) => b["upvotes"] - a["upvotes"]);
-      return topRated.slice(0, 5).map((questionInfo, index) => {
+      return newQuestions.map((questionInfo, index) => {
         let highlighted = false;
         if (upvotedQuestions.upvoteIDs.includes(questionInfo.question_serial)) {
           highlighted = true;
@@ -100,7 +99,7 @@ export const TopList = ({ upvote, upvotedQuestions }) => {
         integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h"
         crossOrigin="anonymous"
       ></link>
-      <h2>Highest rated</h2>
+      <h2>New</h2>
       <List>{renderedQuestions}</List>
     </ListWrapper>
   );

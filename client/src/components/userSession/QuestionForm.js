@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 
-import send from "../../../images/send.png";
+import send from "../../images/send.png";
 
 const Qform = styled.form`
   margin: 0 0 3vh 10px;
@@ -20,7 +20,8 @@ const InputContainer = styled.div`
   flex-direction: row;
 `;
 const InputArea = styled.textarea`
-  width: 30vw;
+  width: 40vw;
+  min-width: 200px;
   height: 55px;
 `;
 
@@ -28,6 +29,8 @@ const SubmitButton = styled.div`
   height: 98%;
   width: 55px;
   text-align: center;
+  line-height: 55px;
+
   background-color: lightblue;
   font-size: 2em;
   border: 1px solid black;

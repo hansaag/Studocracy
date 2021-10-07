@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { SessionState } from "../../../contexts/SessionState";
-import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
+import { SessionState } from "../../contexts/SessionState";
+import { NewQuestionContext } from "../../contexts/NewQuestionContext";
 
-import { NavBar } from "../../navigationBar/NavBar";
+import { NavBar } from "../NavBar";
 import { ChronologicalList } from "./ChronologicalList";
 import { TopList } from "./TopList";
 import { QuestionForm } from "./QuestionForm";

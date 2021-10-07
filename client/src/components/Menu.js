@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { SessionState } from "../../contexts/SessionState";
+import { SessionState } from "../contexts/SessionState";
 
 const Container = styled.div`
   display: flex;

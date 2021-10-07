@@ -1,9 +1,9 @@
 import React, { useEffect, useState, Fragment, useCallback } from "react";
 import "./App.css";
-import { HostSession } from "./components/session/hostSession/HostSession";
-import { Menu } from "./components/menu/Menu";
-import { ParticipantSession } from "./components/session/userSession/ParticipantSession";
-import { PostSession } from "./components/postSession/PostSession";
+import { HostSession } from "./components/hostSession/HostSession";
+import { Menu } from "./components/Menu";
+import { ParticipantSession } from "./components/userSession/ParticipantSession";
+import { PostSession } from "./components/PostSession";
 import { SessionState } from "./contexts/SessionState";
 import { socket } from "./components/service/socket";
 
