@@ -33,11 +33,13 @@ const ParticipantBox = styled.div``;
  */
 
 export const NavBar = () => {
-  const { userContext, setUserContext } = useContext(SessionState);
+  const { userContext } = useContext(SessionState);
   const [numberOfParticipants, setNumberOfParticipants] = useState(0);
 
+  /* reload component to reflect room pin */
   useEffect(() => {}, [userContext["roomPin"]]);
 
+  /* reload component to reflect number of participants */
   useEffect(() => {
     userContext["activeSocket"].on(
       "viewercount-change",

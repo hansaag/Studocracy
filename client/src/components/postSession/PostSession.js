@@ -1,5 +1,5 @@
 import React from "react";
-//presenter som en tidslinje av forelesningen, og vis spørsmålene på en y akse basert på upvotes
+//TODO: add timeline of lecture with labels to questions
 export const PostSession = () => {
   return (
     <div className="Post-session-container">

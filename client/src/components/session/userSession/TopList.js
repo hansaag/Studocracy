@@ -4,8 +4,8 @@ import { NewQuestionContext } from "../../../contexts/NewQuestionContext";
 
 const ListWrapper = styled.div`
   display: flex;
+  max-height: 85vh;
   flex-direction: column;
-  max-height: 70vh;
   justify-content: flex-start;
   text-align: center;
 `;
@@ -28,12 +28,15 @@ const ListItem = styled.li`
 `;
 
 const ListText = styled.p`
-  margin-left: 10px;
+  padding: 10px;
+  /* word-wrap: break-word; */
+  word-break: break-all;
 `;
 
 const UpvoteContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const Upvote = styled.button`
@@ -46,6 +49,11 @@ const Upvote = styled.button`
 
 const UpvoteCount = styled.h4`
   margin-right: 5px;
+`;
+
+const UpvoteWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 /** 
@@ -69,13 +77,15 @@ export const TopList = ({ upvote, upvotedQuestions }) => {
           <ListItem key={index}>
             <ListText>{questionInfo.question}</ListText>
             <UpvoteContainer>
-              <UpvoteCount>{questionInfo.upvotes}</UpvoteCount>
-              <Upvote
-                onClick={() => upvote(questionInfo)}
-                highlighted={highlighted}
-              >
-                <i className="fas fa-long-arrow-alt-up" id="upvote"></i>
-              </Upvote>
+              <UpvoteWrapper>
+                <UpvoteCount>{questionInfo.upvotes}</UpvoteCount>
+                <Upvote
+                  onClick={() => upvote(questionInfo)}
+                  highlighted={highlighted}
+                >
+                  <i className="fas fa-long-arrow-alt-up" id="upvote"></i>
+                </Upvote>
+              </UpvoteWrapper>
             </UpvoteContainer>
           </ListItem>
         );
