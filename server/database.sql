@@ -19,7 +19,6 @@ CREATE TABLE questions(
     user_asked varchar(25) references active_users(user_socket),
     submit_time DATE DEFAULT NOW()
 );
--- SELECT TO_CHAR(NOW() :: DATE, 'dd/mm/yyyy');
 
 
-ALTER SEQUENCE question_serial RESTART WITH 1;
+ALTER SEQUENCE questions_question_serial_seq RESTART WITH 1;
