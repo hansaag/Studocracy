@@ -9,6 +9,10 @@ const Container = styled.div`
   width: 100vw;
   justify-content: space-evenly;
   text-align: center;
+
+  & h2 {
+    cursor: pointer;
+  }
 `;
 
 const Heading = styled.h1`

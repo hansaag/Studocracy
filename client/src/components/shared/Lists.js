@@ -42,6 +42,7 @@ export const Upvote = styled.button`
   font-size: 30px;
   color: ${(props) => (props.highlighted ? "#d35400" : "#95a5a6")};
   outline: none;
+  cursor: pointer;
 `;
 
 export const UpvoteCount = styled.h4`
