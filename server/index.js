@@ -5,8 +5,16 @@ const cors = require("cors");
 const pool = require("./db");
 const { json } = require("express");
 const http = require("http").Server(app);
-const io = require("socket.io")(http);
 app.use(cors());
+
+/* allow cross origin resource sharing from same IP
+  with port 3000 (react frontend)
+  */
+const io = require("socket.io")(http, {
+  cors: {
+    origins: ["http://localhost:3000"],
+  },
+});
 app.use(express.json());
 
 const port = 6800;
@@ -22,9 +30,10 @@ io.on("connection", (socket) => {
     //logic handle failed DB calls
   });
 
+  /* generate random room pin code that guests can connect to */
   socket.on("host-start-session", () => {
     const pin = Math.floor(Math.random() * 90000) + 10000;
-    //needs to check DB for existing value
+    //should query DB in order to check for duplicates and generate new pin
 
     socket.join(`${pin}`);
     io.to(`${socket.id}`).emit("room-pin", `${pin}`);
@@ -33,13 +42,13 @@ io.on("connection", (socket) => {
 
   socket.on("guest-join-session", (id, pin) => {
     console.log("recieved", id, pin);
-    socket.join(`${pin}`);
+    socket.join(`${pin}`); //add the socket to the hosts room
 
-    addUser(pin, id, false);
+    addUser(pin, id, false); //add user entry into database
     io.to(`${id}`).emit("room-access", pin);
-    getAllQuestions(pin);
-    participants = io.sockets.adapter.rooms[`${pin}`].length - 1;
-    io.to(`${pin}`).emit("viewercount-change", participants);
+    getAllQuestions(pin); //query all existing questions and present to new user
+    participants = io.sockets.adapter.rooms[`${pin}`].length - 1; //find participant count
+    io.to(`${pin}`).emit("viewercount-change", participants); //broadcast the new number of participants
   });
 
   socket.on("question-sent", (data) => {
