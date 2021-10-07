@@ -29,7 +29,8 @@ const ListItem = styled.li`
 `;
 
 const ListText = styled.p`
-  margin-left: 10px;
+  padding: 10px;
+  word-break: break-all;
 `;
 
 const UpvoteCount = styled.h4`
@@ -42,7 +43,7 @@ rerendered every time the server proved updates.
 */
 
 export const ChronologicalList = () => {
-  const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);
+  const { newQuestions } = useContext(NewQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
 
   useEffect(() => {

@@ -52,7 +52,7 @@ const InputWrapper = styled.div`
  */
 
 export const HostSession = () => {
-  const { userContext, setUserContext } = useContext(SessionState);
+  const { userContext } = useContext(SessionState);
   const [newQuestions, setNewQuestions] = useState([]);
 
   const registerVote = useCallback((question) => {

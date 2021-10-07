@@ -29,7 +29,6 @@ const ListItem = styled.li`
 
 const ListText = styled.p`
   padding: 10px;
-  /* word-wrap: break-word; */
   word-break: break-all;
 `;
 
@@ -58,11 +57,11 @@ const UpvoteWrapper = styled.div`
 
 /** 
 * The list of questions provded by participants in top-rated order. The list is 
-rerendered on changes to the new question list.
+rerendered on changes to the new question list and returns the top 5 upvoted questions.
 */
 
 export const TopList = ({ upvote, upvotedQuestions }) => {
-  const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);
+  const { newQuestions } = useContext(NewQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
 
   useEffect(() => {

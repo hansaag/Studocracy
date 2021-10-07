@@ -9,9 +9,6 @@ const ListWrapper = styled.div`
   justify-content: flex-start;
   text-align: center;
 
-  & h2 {
-    color: ;
-  }
 `;
 
 const List = styled.div`
@@ -32,7 +29,8 @@ const ListItem = styled.li`
 `;
 
 const ListText = styled.p`
-  margin-left: 10px;
+  padding: 10px;
+  word-break: break-all;
 `;
 
 const UpvoteCount = styled.h4`
@@ -45,7 +43,7 @@ rerendered on changes to the new question list.
 */
 
 export const TopList = () => {
-  const { newQuestions, setNewQuestions } = useContext(NewQuestionContext);
+  const { newQuestions } = useContext(NewQuestionContext);
   const [renderedQuestions, setRenderedQuestions] = useState([]);
 
   useEffect(() => {
