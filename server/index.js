@@ -20,14 +20,16 @@ app.use(express.json());
 const port = 6800;
 const ip = "http://localhost:";
 
-//SOCKET EVENTS
+/* SOCKET EVENTS
+
+The following methods are executed following an event on the socket */
 
 io.on("connection", (socket) => {
   console.log("user joined", socket.id);
 
   socket.on("disconnect", () => {
-    console.log("host disconnected");
-    //logic handle failed DB calls
+    console.log("user disconnected");
+    //TODO: delete the user from DB
   });
 
   /* generate random room pin code that guests can connect to */
@@ -40,10 +42,11 @@ io.on("connection", (socket) => {
     addRoom(socket.id, pin);
   });
 
+  /* fires when a participant tries to enter a room with a provided pin */
   socket.on("guest-join-session", (id, pin) => {
     console.log("recieved", id, pin);
-    socket.join(`${pin}`); //add the socket to the hosts room
 
+    socket.join(`${pin}`); //add the socket to the hosts room
     addUser(pin, id, false); //add user entry into database
     io.to(`${id}`).emit("room-access", pin);
     getAllQuestions(pin); //query all existing questions and present to new user
@@ -51,15 +54,18 @@ io.on("connection", (socket) => {
     io.to(`${pin}`).emit("viewercount-change", participants); //broadcast the new number of participants
   });
 
+  /* add a new question to the database */
   socket.on("question-sent", (data) => {
     console.log(data.user);
     addQuestion(data.room, data.question, data.user);
   });
 
+  /* increment the upvote count for the provided question */
   socket.on("upvote-sent", (question) => {
     upvoteQuestion(question.question_room_pin, question.question_serial);
   });
 
+  /* fires when the host initiates a question round - not yet implemented in frontend */
   socket.on("votinground-sent", (info) => {
     console.log(info.question);
     io.to(`${info.room}`).emit("start-votinground", info.question);
@@ -101,6 +107,12 @@ const addUser = (roomPin, userSocket, host) => {
   }
 };
 
+/* TODO: this method should delete a user from the DB */
+const removeUser = (roomPin, userSocket, host) => {};
+
+/* TODO: this method should delete a question from the session */
+const removeQuestion = (roomPin, question) => {};
+
 //adds a new question to the DB with the corresponding room and user ID
 
 const addQuestion = (room, question, user) => {
@@ -132,6 +144,11 @@ const getAllQuestions = (pin) => {
   }
 };
 
+/* TODO: check for existence of room pin before participant 
+   connects to avoid 'ghost rooms'
+*/
+const checkRoomExists = (pin) => {};
+
 //updates a question in the DB by incrementing the vote count
 
 const upvoteQuestion = (pin, serial) => {
@@ -147,11 +164,14 @@ const upvoteQuestion = (pin, serial) => {
   }
 };
 
+
+
 /* 
-The following procedures respond to the qeuery methods above  
+The following procedures answer the socket event procedures
+above by querying the database for the requested resources
 */
 
-app.post(`/rooms`, async (req, res) => {
+app.post(`/rooms`, async (req) => {
   try {
     const { pin, id } = req.body;
     await pool.query(
@@ -167,7 +187,7 @@ app.post(`/rooms`, async (req, res) => {
 
 //adds a new user to DB with accompanying room ID
 
-app.post(`/active_users`, async (req, res) => {
+app.post(`/active_users`, async (req) => {
   try {
     const { roomPin, userSocket, host } = req.body;
     await pool.query(

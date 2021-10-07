@@ -1,41 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
-import styled from "styled-components";
+import React from "react";
+import {
+  Qform,
+  FormHeader,
+  InputContainer,
+  InputArea,
+  SubmitButton,
+} from "../shared/Forms";
 
-import send from "../../images/send.png";
 
-const Qform = styled.form`
-  margin: 0 0 3vh 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 20vh;
-`;
 
-const FormHeader = styled.h2`
-  margin: 5px 0 10px 15px;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-const InputArea = styled.textarea`
-  width: 40vw;
-  min-width: 200px;
-  height: 55px;
-`;
-
-const SubmitButton = styled.div`
-  height: 98%;
-  width: 55px;
-  text-align: center;
-  line-height: 55px;
-  background-color: lightblue;
-  font-size: 2em;
-  border: 1px solid black;
-`;
-
-const SendButton = styled.img``;
 /** 
 * Component responsible for starting voting rounds from host. Host can formulate a question and
 (when implemented) include options that participants can vote for.
